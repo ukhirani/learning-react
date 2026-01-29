@@ -1,5 +1,5 @@
 const CurrentColor = ({ color }) => {
-  return <div class="current-color">Color - {color}</div>;
+  return <div className="current-color">Color - {color}</div>;
 };
 
 export default CurrentColor;

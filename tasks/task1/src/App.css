@@ -6,15 +6,18 @@
 }
 
 body {
-  /* Set the initial background color */
-
-  /* Apply the transition property */
-  /* Transition 'background-color' over '0.5s' with an 'ease' timing function */
   transition: background-color 0.3s ease;
-
-  /* Ensure the body takes the full height of the viewport */
   min-height: 100vh;
   margin: 0;
+}
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: background-color 0.2s ease; /* Transition properties */
 }
 
 .logo {

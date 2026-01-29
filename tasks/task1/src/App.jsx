@@ -1,30 +1,31 @@
 import axios from "axios";
 import "./App.css";
-
 import PageOne from "./src/pages/PageOne/PageOne";
 import PageTwo from "./src/pages/PageTwo/PageTwo";
+import Container from "./src/components/Container";
 import { useState } from "react";
-import { useEffect } from "react";
 
 function App() {
   const [data, setData] = useState("#000000");
 
-  function setRandomColor() {
+  const setRandomColor = async () => {
     console.log("hello");
-    axios.get("https://x-colors.yurace.pro/api/random").then((response) => {
+    try {
+      const response = await axios.get(
+        "https://x-colors.yurace.pro/api/random",
+      );
       setData(response.data.hex);
-    });
-  }
-
-  useEffect(() => {
-    console.log("from Use Effect" + data);
-    document.body.style.backgroundColor = data;
-  }, [data]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
-      <PageOne SetRandomColor={setRandomColor} />{" "}
-      <PageTwo color={data}></PageTwo>
+      <Container bgColor={data}>
+        <PageOne setRandomColor={setRandomColor} />
+        <PageTwo color={data} />
+      </Container>
     </>
   );
 }
