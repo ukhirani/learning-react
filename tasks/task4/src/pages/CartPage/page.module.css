@@ -1,0 +1,155 @@
+.container {
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+  }
+}
+
+.title {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1.5rem !important;
+  color: #1f2937 !important;
+}
+
+.empty {
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+@media (max-width: 768px) {
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+}
+
+.itemImage {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .itemImage {
+    width: 60px;
+    height: 60px;
+    align-self: center;
+  }
+}
+
+.itemDetails {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .itemDetails {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.itemTitle {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+  line-height: 1.4;
+}
+
+.itemPrice {
+  font-size: 1rem;
+  color: #374151;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.quantityRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .quantityRow {
+    justify-content: center;
+  }
+}
+
+.qtyValue {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.remove {
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .remove {
+    margin-left: 0;
+    align-self: center;
+  }
+}
+
+.totalSection {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  background: #f9fafb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .totalSection {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+.totalLabel {
+  font-weight: 600 !important;
+  color: #374151 !important;
+}
+
+.totalAmount {
+  color: #16a34a !important;
+  font-weight: 700 !important;
+}
+
+.totalAmount {
+  font-weight: 700;
+  color: #1976d2;
+}

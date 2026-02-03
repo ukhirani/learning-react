@@ -1,0 +1,55 @@
+.root {
+  min-height: 100vh;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1rem 1rem;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 1rem;
+  }
+
+  .root {
+    padding: 0.5rem;
+  }
+}
+
+.searchWrapper {
+  flex: 1 1 0%;
+  max-width: 520px;
+  margin: 0 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .searchWrapper {
+    margin: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+.headerActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.loaderBox {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

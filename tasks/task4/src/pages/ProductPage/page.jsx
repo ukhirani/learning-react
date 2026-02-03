@@ -1,13 +1,19 @@
-import { ProductCard } from "../../components/productCard";
+import { Box } from "@mui/material";
+import { ProductCard } from "../../components/productCard/productCard";
+import styles from "./page.module.css";
 
-export default function ProductPage({ data }) {
+export default function ProductPage({ data = [] }) {
   if (data.length === 0) {
-    return <div className="loader text-xl font-bold">No products found.</div>;
+    return (
+      <Box className={styles.emptyBox}>
+        <Box className={styles.empty}>No products found.</Box>
+      </Box>
+    );
   }
 
-  const content = data.map((product) => {
-    return <ProductCard key={product.id} product={product}></ProductCard>;
-  });
+  const content = data.map((product) => (
+    <ProductCard key={product.id} product={product} />
+  ));
 
-  return <div className=" flex flex-col gap-4 ">{content}</div>;
+  return <Box className={styles.container}>{content}</Box>;
 }
