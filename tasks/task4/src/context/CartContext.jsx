@@ -13,11 +13,7 @@ export function CartProvider({ children }) {
   });
 
   const persistCart = (items) => {
-    try {
-      localStorage.setItem("cartItems", JSON.stringify(items));
-    } catch {
-      // ignore storage errors
-    }
+    localStorage.setItem("cartItems", JSON.stringify(items));
   };
 
   const addToCart = (product, quantity = 1) => {
