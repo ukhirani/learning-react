@@ -5,6 +5,7 @@ const ProductsContext = createContext(null);
 export function ProductsProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -13,10 +14,14 @@ export function ProductsProvider({ children }) {
         setProducts(data);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((e) => {
+        setLoading(false);
+        setError(e);
+        console.error("Failed to fetch products:", e);
+      });
   }, []);
 
-  const value = { products, loading };
+  const value = { products, loading, error };
 
   return (
     <ProductsContext.Provider value={value}>

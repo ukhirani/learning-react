@@ -1,0 +1,9 @@
+.root {
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 0.5rem;
+  }
+}

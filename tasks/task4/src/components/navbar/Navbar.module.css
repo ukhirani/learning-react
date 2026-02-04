@@ -1,0 +1,79 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1rem;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 1rem;
+  }
+}
+
+.logo {
+  font-weight: 600 !important;
+  color: #1f2937 !important;
+}
+
+.searchWrapper {
+  flex: 1 1 0%;
+  max-width: 520px;
+  margin: 0 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .searchWrapper {
+    margin: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+.headerActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.backButton {
+  height: 40px !important;
+  border-radius: 10px !important;
+  border-color: #d1d5db !important;
+  color: #374151 !important;
+  text-transform: none !important;
+}
+
+.backButton:hover {
+  border-color: #16a34a !important;
+  color: #16a34a !important;
+  background-color: transparent !important;
+}
+
+.cartButton {
+  height: 40px !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+  background-color: #16a34a !important;
+  text-transform: none !important;
+}
+
+.cartButton:hover {
+  background-color: #15803d !important;
+  box-shadow: none !important;
+}
+
+.badge :global(.MuiBadge-badge) {
+  right: -3px;
+  top: 3px;
+  border: 2px solid white;
+  padding: 0 4px;
+}
