@@ -6,12 +6,17 @@ import styles from "./App.module.css";
 import NotFoundPage from "./pages/NotFoundPage/page";
 
 export default function Layout() {
-  const { search } = useOutletContext();
+  const { search, selectedCategory } = useOutletContext();
   const { products, loading, error } = useProducts();
 
-  const filteredData = products.filter((product) =>
-    product.title.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filteredData = products.filter((product) => {
+    const matchesSearch = product.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    const matchesCategory =
+      !selectedCategory || product.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
   if (error) {
     console.error("Error fetching PRODUCTS:", error);
     return <NotFoundPage>Error fetching products</NotFoundPage>;

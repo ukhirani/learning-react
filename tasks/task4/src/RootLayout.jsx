@@ -6,12 +6,20 @@ import styles from "./RootLayout.module.css";
 
 export default function RootLayout() {
   const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   return (
     <Box className={styles.root}>
-      <Navbar search={search} setSearch={setSearch} />
+      <Navbar
+        search={search}
+        setSearch={setSearch}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
       <Box className={styles.main}>
-        <Outlet context={{ search, setSearch }} />
+        <Outlet
+          context={{ search, setSearch, selectedCategory, setSelectedCategory }}
+        />
       </Box>
     </Box>
   );
