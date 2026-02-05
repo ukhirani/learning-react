@@ -82,7 +82,7 @@ export default function ProductDetailPage() {
                   onClick={() => decreaseQuantity(product.id)}
                   aria-label="Decrease quantity"
                 >
-                  −
+                  -
                 </Button>
                 <span className={styles.qtyValue}>{quantity}</span>
                 <Button
