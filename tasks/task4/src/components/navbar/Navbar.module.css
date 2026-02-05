@@ -38,6 +38,11 @@
   }
 }
 
+.categorySelect {
+  min-width: 150px !important;
+  margin-right: 1rem;
+}
+
 .headerActions {
   display: flex;
   gap: 0.5rem;
