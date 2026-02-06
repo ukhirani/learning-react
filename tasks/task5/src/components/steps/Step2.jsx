@@ -60,7 +60,13 @@ const Step2 = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    updateAcademicBackground({ [name]: value });
+    const nextValue =
+      name === "graduationYear"
+        ? value.replace(/\D/g, "").slice(0, 4)
+        : name === "gpa"
+          ? value.replace(/[^0-9.]/g, "")
+          : value;
+    updateAcademicBackground({ [name]: nextValue });
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -91,10 +97,16 @@ const Step2 = () => {
     if (!academicBackground.graduationYear.trim()) {
       newErrors.graduationYear = "Graduation year is required";
     } else {
-      const year = parseInt(academicBackground.graduationYear);
+      const year = parseInt(academicBackground.graduationYear, 10);
       const currentYear = new Date().getFullYear();
-      if (isNaN(year) || year < 1950 || year > currentYear + 5) {
-        newErrors.graduationYear = "Please enter a valid graduation year";
+      if (
+        isNaN(year) ||
+        !/^\d{4}$/.test(academicBackground.graduationYear) ||
+        year < 1900 ||
+        year > currentYear
+      ) {
+        newErrors.graduationYear =
+          "Please enter a valid year (not in the future)";
       }
     }
 
@@ -192,7 +204,13 @@ const Step2 = () => {
               error={!!errors.graduationYear}
               helperText={errors.graduationYear}
               fullWidth
-              inputProps={{ min: 1950, max: 2030 }}
+              inputProps={{
+                min: 1900,
+                max: new Date().getFullYear(),
+                maxLength: 4,
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+              }}
             />
           </Box>
 
@@ -206,6 +224,7 @@ const Step2 = () => {
               error={!!errors.gpa}
               helperText={errors.gpa || "Scale: 0-10"}
               fullWidth
+              inputProps={{ inputMode: "decimal" }}
             />
             <div></div>
           </Box>

@@ -57,7 +57,15 @@ const Step1 = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    updatePersonalDetails({ [name]: value });
+    const nextValue =
+      name === "phone"
+        ? value.replace(/\D/g, "").slice(0, 10)
+        : name === "zipCode"
+          ? value.replace(/\D/g, "").slice(0, 6)
+          : ["firstName", "lastName", "city"].includes(name)
+            ? value.replace(/[^A-Za-z\s.'-]/g, "")
+            : value;
+    updatePersonalDetails({ [name]: nextValue });
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -65,7 +73,11 @@ const Step1 = () => {
   };
 
   const handleAutocompleteChange = (name) => (event, value) => {
-    updatePersonalDetails({ [name]: value || "" });
+    const nextValue =
+      name === "state" || name === "country"
+        ? (value || "").replace(/[^A-Za-z\s.'-]/g, "")
+        : value || "";
+    updatePersonalDetails({ [name]: nextValue });
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -76,10 +88,14 @@ const Step1 = () => {
 
     if (!personalDetails.firstName.trim()) {
       newErrors.firstName = "First name is required";
+    } else if (!/^[A-Za-z][A-Za-z\s.'-]*$/.test(personalDetails.firstName)) {
+      newErrors.firstName = "First name should contain only letters";
     }
 
     if (!personalDetails.lastName.trim()) {
       newErrors.lastName = "Last name is required";
+    } else if (!/^[A-Za-z][A-Za-z\s.'-]*$/.test(personalDetails.lastName)) {
+      newErrors.lastName = "Last name should contain only letters";
     }
 
     if (!personalDetails.email.trim()) {
@@ -90,8 +106,8 @@ const Step1 = () => {
 
     if (!personalDetails.phone.trim()) {
       newErrors.phone = "Phone number is required";
-    } else if (!/^\+?[\d\s-]{10,}$/.test(personalDetails.phone)) {
-      newErrors.phone = "Please enter a valid phone number";
+    } else if (!/^[6-9]\d{9}$/.test(personalDetails.phone)) {
+      newErrors.phone = "Enter a valid 10-digit Indian mobile number";
     }
 
     if (!personalDetails.dateOfBirth) {
@@ -108,6 +124,8 @@ const Step1 = () => {
 
     if (!personalDetails.city.trim()) {
       newErrors.city = "City is required";
+    } else if (!/^[A-Za-z][A-Za-z\s.'-]*$/.test(personalDetails.city)) {
+      newErrors.city = "City should contain only letters";
     }
 
     if (!personalDetails.state.trim()) {
@@ -116,6 +134,8 @@ const Step1 = () => {
 
     if (!personalDetails.zipCode.trim()) {
       newErrors.zipCode = "Zip code is required";
+    } else if (!/^\d{6}$/.test(personalDetails.zipCode)) {
+      newErrors.zipCode = "Enter a valid 6-digit PIN code";
     }
 
     if (!personalDetails.country.trim()) {
@@ -221,6 +241,11 @@ const Step1 = () => {
               error={!!errors.phone}
               helperText={errors.phone}
               fullWidth
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+                maxLength: 10,
+              }}
               autoComplete="tel"
             />
           </Box>
@@ -285,6 +310,11 @@ const Step1 = () => {
               error={!!errors.zipCode}
               helperText={errors.zipCode}
               fullWidth
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+                maxLength: 6,
+              }}
               autoComplete="postal-code"
             />
             <Autocomplete

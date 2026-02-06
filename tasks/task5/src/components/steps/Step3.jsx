@@ -76,7 +76,9 @@ const Step3 = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    updateProfessionalBackground({ [name]: value });
+    const nextValue =
+      name === "yearsOfExperience" ? value.replace(/[^0-9.]/g, "") : value;
+    updateProfessionalBackground({ [name]: nextValue });
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -108,8 +110,8 @@ const Step3 = () => {
       newErrors.yearsOfExperience = "Years of experience is required";
     } else {
       const years = parseFloat(professionalBackground.yearsOfExperience);
-      if (isNaN(years) || years < 0 || years > 50) {
-        newErrors.yearsOfExperience = "Please enter valid years (0-50)";
+      if (isNaN(years) || years < 0 || years > 60) {
+        newErrors.yearsOfExperience = "Please enter a valid number (0-60)";
       }
     }
 
@@ -213,7 +215,7 @@ const Step3 = () => {
               error={!!errors.yearsOfExperience}
               helperText={errors.yearsOfExperience}
               fullWidth
-              inputProps={{ min: 0, max: 50, step: 0.5 }}
+              inputProps={{ min: 0, max: 60, step: 0.5, inputMode: "decimal" }}
             />
           </Box>
         </Box>
