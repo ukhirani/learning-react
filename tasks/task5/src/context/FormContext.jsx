@@ -32,7 +32,7 @@ const initialFormData = {
     company: "",
     industry: "",
     yearsOfExperience: "",
-    skills: "",
+    skills: [],
     jobDescription: "",
     linkedinUrl: "",
     portfolioUrl: "",
@@ -44,6 +44,18 @@ const loadFromStorage = () => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
+      const normalizedProfessional = {
+        ...initialFormData.professionalBackground,
+        ...parsed.professionalBackground,
+      };
+      if (!Array.isArray(normalizedProfessional.skills)) {
+        const raw = normalizedProfessional.skills || "";
+        normalizedProfessional.skills = raw
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean);
+      }
+
       return {
         ...initialFormData,
         ...parsed,
@@ -55,10 +67,7 @@ const loadFromStorage = () => {
           ...initialFormData.academicBackground,
           ...parsed.academicBackground,
         },
-        professionalBackground: {
-          ...initialFormData.professionalBackground,
-          ...parsed.professionalBackground,
-        },
+        professionalBackground: normalizedProfessional,
       };
     }
   } catch (e) {

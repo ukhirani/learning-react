@@ -1,57 +1,17 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 import { useFormContext } from "../../context/FormContext";
+import { degrees, fieldsOfStudy, institutions } from "../../constants/options";
+import {
+  isValidGpa,
+  isValidYear,
+  sanitizeDecimal,
+  sanitizeDigits,
+} from "../../utils/formUtils";
 import ForwardButton from "../buttons/forwardButton/forwardButton";
 import BackwardButton from "../buttons/backwardButton/backwardButton.jsx";
 import BottomBar from "../bottomBar/BottomBar.jsx";
 import FormStep from "../formStep/formStep";
-import styles from "./step2.module.css";
-
-const degrees = [
-  "High School Diploma",
-  "Associate's Degree",
-  "Bachelor's Degree",
-  "Master's Degree",
-  "Doctorate (PhD)",
-  "MBA",
-  "MD (Medical Doctor)",
-  "JD (Law)",
-  "Professional Certificate",
-  "Diploma",
-];
-
-const fieldsOfStudy = [
-  "Computer Science",
-  "Information Technology",
-  "Electrical Engineering",
-  "Mechanical Engineering",
-  "Civil Engineering",
-  "Business Administration",
-  "Economics",
-  "Finance",
-  "Marketing",
-  "Psychology",
-  "Medicine",
-  "Law",
-  "Arts & Design",
-  "Data Science",
-  "Artificial Intelligence",
-];
-
-const institutions = [
-  "IIT Bombay",
-  "IIT Delhi",
-  "IIT Madras",
-  "IIM Ahmedabad",
-  "IIM Bangalore",
-  "BITS Pilani",
-  "NIT Trichy",
-  "MIT",
-  "Stanford University",
-  "Harvard University",
-  "Oxford University",
-  "Cambridge University",
-  "National University of Singapore",
-];
+import formStyles from "../formStep/formStep.module.css";
 
 const Step2 = () => {
   const { setStep, formData, updateAcademicBackground, errors, setErrors } =
@@ -62,9 +22,9 @@ const Step2 = () => {
     const { name, value } = event.target;
     const nextValue =
       name === "graduationYear"
-        ? value.replace(/\D/g, "").slice(0, 4)
+        ? sanitizeDigits(value, 4)
         : name === "gpa"
-          ? value.replace(/[^0-9.]/g, "")
+          ? sanitizeDecimal(value)
           : value;
     updateAcademicBackground({ [name]: nextValue });
     if (errors[name]) {
@@ -97,22 +57,14 @@ const Step2 = () => {
     if (!academicBackground.graduationYear.trim()) {
       newErrors.graduationYear = "Graduation year is required";
     } else {
-      const year = parseInt(academicBackground.graduationYear, 10);
-      const currentYear = new Date().getFullYear();
-      if (
-        isNaN(year) ||
-        !/^\d{4}$/.test(academicBackground.graduationYear) ||
-        year < 1900 ||
-        year > currentYear
-      ) {
+      if (!isValidYear(academicBackground.graduationYear, 1900)) {
         newErrors.graduationYear =
           "Please enter a valid year (not in the future)";
       }
     }
 
     if (academicBackground.gpa.trim()) {
-      const gpa = parseFloat(academicBackground.gpa);
-      if (isNaN(gpa) || gpa < 0 || gpa > 10) {
+      if (!isValidGpa(academicBackground.gpa)) {
         newErrors.gpa = "GPA must be between 0 and 10";
       }
     }
@@ -133,12 +85,12 @@ const Step2 = () => {
 
   return (
     <FormStep title="Academic Background">
-      <Box component="form" className={styles.form}>
-        <Box className={styles.section}>
-          <p className={styles.sectionTitle}>Education Details</p>
-          <Box className={styles.gridTwo}>
+      <Box component="form" className={formStyles.form}>
+        <Box className={formStyles.section}>
+          <p className={formStyles.sectionTitle}>Education Details</p>
+          <Box className={formStyles.gridTwo}>
             <Autocomplete
-              freeSolo
+              // freeSolo
               options={degrees}
               value={academicBackground.highestDegree}
               onChange={handleAutocompleteChange("highestDegree")}
@@ -156,7 +108,7 @@ const Step2 = () => {
               )}
             />
             <Autocomplete
-              freeSolo
+              // freeSolo
               options={fieldsOfStudy}
               value={academicBackground.fieldOfStudy}
               onChange={handleAutocompleteChange("fieldOfStudy")}
@@ -175,9 +127,9 @@ const Step2 = () => {
             />
           </Box>
 
-          <Box className={styles.gridTwo}>
+          <Box className={formStyles.gridTwo}>
             <Autocomplete
-              freeSolo
+              // freeSolo
               options={institutions}
               value={academicBackground.institution}
               onChange={handleAutocompleteChange("institution")}
@@ -214,7 +166,7 @@ const Step2 = () => {
             />
           </Box>
 
-          <Box className={styles.gridTwo}>
+          <Box className={formStyles.gridTwo}>
             <TextField
               label="GPA / CGPA (Optional)"
               variant="outlined"
@@ -230,8 +182,8 @@ const Step2 = () => {
           </Box>
         </Box>
 
-        <Box className={styles.section}>
-          <p className={styles.sectionTitle}>Additional Details</p>
+        <Box className={formStyles.section}>
+          <p className={formStyles.sectionTitle}>Additional Details</p>
           <TextField
             label="Academic Achievements (Optional)"
             variant="outlined"

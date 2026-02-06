@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import styles from "./button.module.css";
 
 const BackwardButton = ({ children, onClick }) => {
@@ -7,6 +8,7 @@ const BackwardButton = ({ children, onClick }) => {
       className={styles.forwardButton}
       variant="contained"
       onClick={onClick}
+      startIcon={<ArrowBackIcon />}
     >
       {children}
     </Button>

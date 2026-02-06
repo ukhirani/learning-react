@@ -1,5 +1,11 @@
 import { Box, Modal, Typography, Divider, Button, Chip } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import RestartAltOutlinedIcon from "@mui/icons-material/RestartAltOutlined";
 import { useFormContext } from "../../context/FormContext";
 import styles from "./successModal.module.css";
 
@@ -19,6 +25,10 @@ const SuccessModal = () => {
     setIsModalOpen(false);
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   const formatLabel = (key) => {
     return key
       .replace(/([A-Z])/g, " $1")
@@ -27,11 +37,14 @@ const SuccessModal = () => {
   };
 
   const renderField = (label, value) => {
-    if (!value) return null;
+    const displayValue = Array.isArray(value)
+      ? value.filter(Boolean).join(", ")
+      : value;
+    if (!displayValue) return null;
     return (
       <Box className={styles.field}>
         <Typography className={styles.fieldLabel}>{label}</Typography>
-        <Typography className={styles.fieldValue}>{value}</Typography>
+        <Typography className={styles.fieldValue}>{displayValue}</Typography>
       </Box>
     );
   };
@@ -42,7 +55,7 @@ const SuccessModal = () => {
       onClose={handleClose}
       aria-labelledby="success-modal-title"
     >
-      <Box className={styles.modalContainer}>
+      <Box className={`${styles.modalContainer} ${styles.printArea}`}>
         <Box className={styles.header}>
           <CheckCircleOutlineIcon className={styles.successIcon} />
           <Typography variant="h5" className={styles.title}>
@@ -57,7 +70,7 @@ const SuccessModal = () => {
           {/* Personal Details Section */}
           <Box className={styles.section}>
             <Typography className={styles.sectionTitle}>
-              <Chip label="1" size="small" className={styles.chip} />
+              <PersonOutlineIcon fontSize="small" />
               Personal Details
             </Typography>
             <Divider className={styles.divider} />
@@ -80,7 +93,7 @@ const SuccessModal = () => {
           {/* Academic Background Section */}
           <Box className={styles.section}>
             <Typography className={styles.sectionTitle}>
-              <Chip label="2" size="small" className={styles.chip} />
+              <SchoolOutlinedIcon fontSize="small" />
               Academic Background
             </Typography>
             <Divider className={styles.divider} />
@@ -101,7 +114,7 @@ const SuccessModal = () => {
           {/* Professional Background Section */}
           <Box className={styles.section}>
             <Typography className={styles.sectionTitle}>
-              <Chip label="3" size="small" className={styles.chip} />
+              <WorkOutlineIcon fontSize="small" />
               Professional Background
             </Typography>
             <Divider className={styles.divider} />
@@ -129,13 +142,23 @@ const SuccessModal = () => {
             variant="outlined"
             onClick={handleClose}
             className={styles.closeButton}
+            startIcon={<CloseOutlinedIcon />}
           >
             Close
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={handlePrint}
+            className={styles.printButton}
+            startIcon={<PrintOutlinedIcon />}
+          >
+            Print Resume
           </Button>
           <Button
             variant="contained"
             onClick={handleStartOver}
             className={styles.startOverButton}
+            startIcon={<RestartAltOutlinedIcon />}
           >
             Start Over
           </Button>

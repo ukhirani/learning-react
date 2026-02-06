@@ -117,6 +117,12 @@
   background-color: #1976d2 !important;
 }
 
+.printButton {
+  text-transform: none !important;
+  border-color: #d0d5dd !important;
+  color: #1f2a44 !important;
+}
+
 @media (max-width: 600px) {
   .modalContainer {
     width: 95%;
@@ -139,5 +145,50 @@
   .closeButton,
   .startOverButton {
     width: 100%;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .printArea,
+  .printArea * {
+    visibility: visible;
+  }
+
+  .printArea {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    height: auto !important;
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .actions {
+    display: none;
+  }
+
+  .content {
+    overflow: visible !important;
+  }
+
+  .section {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 }

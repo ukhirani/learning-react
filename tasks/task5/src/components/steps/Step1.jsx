@@ -8,47 +8,22 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 import { useFormContext } from "../../context/FormContext";
+import { countries, states } from "../../constants/options";
+import {
+  isValidEmail,
+  isValidIndianMobile,
+  isValidName,
+  isValidPinCode,
+  sanitizeAlpha,
+  sanitizeDigits,
+} from "../../utils/formUtils";
 import ForwardButton from "../buttons/forwardButton/forwardButton";
 import BottomBar from "../bottomBar/BottomBar.jsx";
 import FormStep from "../formStep/formStep";
-import styles from "./step1.module.css";
-
-const countries = [
-  "India",
-  "United States",
-  "United Kingdom",
-  "Canada",
-  "Australia",
-  "Germany",
-  "France",
-  "Japan",
-  "China",
-  "Brazil",
-  "Singapore",
-  "UAE",
-  "Netherlands",
-  "Sweden",
-  "Switzerland",
-];
-
-const states = [
-  "Maharashtra",
-  "Karnataka",
-  "Tamil Nadu",
-  "Gujarat",
-  "Rajasthan",
-  "Delhi",
-  "Uttar Pradesh",
-  "West Bengal",
-  "Kerala",
-  "Telangana",
-  "California",
-  "Texas",
-  "New York",
-  "Florida",
-  "Washington",
-];
+import formStyles from "../formStep/formStep.module.css";
 
 const Step1 = () => {
   const { setStep, formData, updatePersonalDetails, errors, setErrors } =
@@ -59,11 +34,11 @@ const Step1 = () => {
     const { name, value } = event.target;
     const nextValue =
       name === "phone"
-        ? value.replace(/\D/g, "").slice(0, 10)
+        ? sanitizeDigits(value, 10)
         : name === "zipCode"
-          ? value.replace(/\D/g, "").slice(0, 6)
+          ? sanitizeDigits(value, 6)
           : ["firstName", "lastName", "city"].includes(name)
-            ? value.replace(/[^A-Za-z\s.'-]/g, "")
+            ? sanitizeAlpha(value)
             : value;
     updatePersonalDetails({ [name]: nextValue });
     // Clear error when user starts typing
@@ -73,11 +48,22 @@ const Step1 = () => {
   };
 
   const handleAutocompleteChange = (name) => (event, value) => {
-    const nextValue =
+    const sanitized =
       name === "state" || name === "country"
-        ? (value || "").replace(/[^A-Za-z\s.'-]/g, "")
+        ? sanitizeAlpha(value || "")
         : value || "";
-    updatePersonalDetails({ [name]: nextValue });
+    updatePersonalDetails({ [name]: sanitized });
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const handleAutocompleteInputChange = (name) => (event, value) => {
+    const sanitized =
+      name === "state" || name === "country"
+        ? sanitizeAlpha(value || "")
+        : value || "";
+    updatePersonalDetails({ [name]: sanitized });
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -88,25 +74,25 @@ const Step1 = () => {
 
     if (!personalDetails.firstName.trim()) {
       newErrors.firstName = "First name is required";
-    } else if (!/^[A-Za-z][A-Za-z\s.'-]*$/.test(personalDetails.firstName)) {
+    } else if (!isValidName(personalDetails.firstName)) {
       newErrors.firstName = "First name should contain only letters";
     }
 
     if (!personalDetails.lastName.trim()) {
       newErrors.lastName = "Last name is required";
-    } else if (!/^[A-Za-z][A-Za-z\s.'-]*$/.test(personalDetails.lastName)) {
+    } else if (!isValidName(personalDetails.lastName)) {
       newErrors.lastName = "Last name should contain only letters";
     }
 
     if (!personalDetails.email.trim()) {
       newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(personalDetails.email)) {
+    } else if (!isValidEmail(personalDetails.email)) {
       newErrors.email = "Please enter a valid email";
     }
 
     if (!personalDetails.phone.trim()) {
       newErrors.phone = "Phone number is required";
-    } else if (!/^[6-9]\d{9}$/.test(personalDetails.phone)) {
+    } else if (!isValidIndianMobile(personalDetails.phone)) {
       newErrors.phone = "Enter a valid 10-digit Indian mobile number";
     }
 
@@ -124,7 +110,7 @@ const Step1 = () => {
 
     if (!personalDetails.city.trim()) {
       newErrors.city = "City is required";
-    } else if (!/^[A-Za-z][A-Za-z\s.'-]*$/.test(personalDetails.city)) {
+    } else if (!isValidName(personalDetails.city)) {
       newErrors.city = "City should contain only letters";
     }
 
@@ -134,7 +120,7 @@ const Step1 = () => {
 
     if (!personalDetails.zipCode.trim()) {
       newErrors.zipCode = "Zip code is required";
-    } else if (!/^\d{6}$/.test(personalDetails.zipCode)) {
+    } else if (!isValidPinCode(personalDetails.zipCode)) {
       newErrors.zipCode = "Enter a valid 6-digit PIN code";
     }
 
@@ -153,10 +139,10 @@ const Step1 = () => {
 
   return (
     <FormStep title="Personal Details">
-      <Box component="form" className={styles.form}>
-        <Box className={styles.section}>
-          <p className={styles.sectionTitle}>Basic Information</p>
-          <Box className={styles.gridTwo}>
+      <Box component="form" className={formStyles.form}>
+        <Box className={formStyles.section}>
+          <p className={formStyles.sectionTitle}>Basic Information</p>
+          <Box className={formStyles.gridTwo}>
             <TextField
               label="First Name"
               variant="outlined"
@@ -181,19 +167,33 @@ const Step1 = () => {
             />
           </Box>
 
-          <Box className={styles.gridTwo}>
-            <TextField
+          <Box className={formStyles.gridTwo}>
+            <DatePicker
               label="Date of Birth"
-              variant="outlined"
-              type="date"
-              name="dateOfBirth"
-              value={personalDetails.dateOfBirth}
-              onChange={handleChange}
-              error={!!errors.dateOfBirth}
-              helperText={errors.dateOfBirth}
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              autoComplete="bday"
+              value={
+                personalDetails.dateOfBirth
+                  ? dayjs(personalDetails.dateOfBirth)
+                  : null
+              }
+              onChange={(value) => {
+                const nextValue = value?.isValid()
+                  ? value.format("YYYY-MM-DD")
+                  : "";
+                updatePersonalDetails({ dateOfBirth: nextValue });
+                if (errors.dateOfBirth) {
+                  setErrors((prev) => ({ ...prev, dateOfBirth: "" }));
+                }
+              }}
+              format="DD/MM/YYYY"
+              slotProps={{
+                textField: {
+                  variant: "outlined",
+                  fullWidth: true,
+                  error: !!errors.dateOfBirth,
+                  helperText: errors.dateOfBirth,
+                  autoComplete: "bday",
+                },
+              }}
             />
             <FormControl variant="outlined" fullWidth error={!!errors.gender}>
               <InputLabel id="gender-label">Gender</InputLabel>
@@ -216,9 +216,9 @@ const Step1 = () => {
           </Box>
         </Box>
 
-        <Box className={styles.section}>
-          <p className={styles.sectionTitle}>Contact Details</p>
-          <Box className={styles.gridTwo}>
+        <Box className={formStyles.section}>
+          <p className={formStyles.sectionTitle}>Contact Details</p>
+          <Box className={formStyles.gridTwo}>
             <TextField
               label="Email"
               variant="outlined"
@@ -251,8 +251,8 @@ const Step1 = () => {
           </Box>
         </Box>
 
-        <Box className={styles.section}>
-          <p className={styles.sectionTitle}>Address</p>
+        <Box className={formStyles.section}>
+          <p className={formStyles.sectionTitle}>Address</p>
           <TextField
             label="Address"
             variant="outlined"
@@ -267,7 +267,7 @@ const Step1 = () => {
             autoComplete="street-address"
           />
 
-          <Box className={styles.gridTwo}>
+          <Box className={formStyles.gridTwo}>
             <TextField
               label="City"
               variant="outlined"
@@ -280,13 +280,11 @@ const Step1 = () => {
               autoComplete="address-level2"
             />
             <Autocomplete
-              freeSolo
+              // freeSolo
               options={states}
               value={personalDetails.state}
               onChange={handleAutocompleteChange("state")}
-              onInputChange={(e, value) =>
-                updatePersonalDetails({ state: value })
-              }
+              onInputChange={handleAutocompleteInputChange("state")}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -300,7 +298,7 @@ const Step1 = () => {
             />
           </Box>
 
-          <Box className={styles.gridTwo}>
+          <Box className={formStyles.gridTwo}>
             <TextField
               label="Zip Code"
               variant="outlined"
@@ -318,13 +316,11 @@ const Step1 = () => {
               autoComplete="postal-code"
             />
             <Autocomplete
-              freeSolo
+              // freeSolo
               options={countries}
               value={personalDetails.country}
               onChange={handleAutocompleteChange("country")}
-              onInputChange={(e, value) =>
-                updatePersonalDetails({ country: value })
-              }
+              onInputChange={handleAutocompleteInputChange("country")}
               renderInput={(params) => (
                 <TextField
                   {...params}

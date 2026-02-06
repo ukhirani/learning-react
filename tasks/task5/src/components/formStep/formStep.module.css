@@ -5,14 +5,48 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  border-radius: 15px;
+  border-radius: 12px;
   padding: 1.5rem;
   padding-top: 0px;
-
   margin-top: 0px;
 }
 
 .heading {
   font-weight: bold;
-  font-size: 20px !important;
+  font-size: 1.1rem !important;
+  color: #1f2a44;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eef1f6;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #27324a;
+  text-transform: none;
+}
+
+.gridTwo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .gridTwo {
+    grid-template-columns: 1fr;
+  }
 }

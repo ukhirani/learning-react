@@ -1,67 +1,12 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 import { useFormContext } from "../../context/FormContext";
+import { industries, jobTitles, skillsList } from "../../constants/options";
+import { sanitizeDecimal } from "../../utils/formUtils";
 import ForwardButton from "../buttons/forwardButton/forwardButton";
 import BackwardButton from "../buttons/backwardButton/backwardButton.jsx";
 import BottomBar from "../bottomBar/BottomBar.jsx";
 import FormStep from "../formStep/formStep";
-import styles from "./step3.module.css";
-
-const jobTitles = [
-  "Software Engineer",
-  "Senior Software Engineer",
-  "Full Stack Developer",
-  "Frontend Developer",
-  "Backend Developer",
-  "Data Scientist",
-  "Data Analyst",
-  "Product Manager",
-  "Project Manager",
-  "UX Designer",
-  "UI Designer",
-  "DevOps Engineer",
-  "Cloud Architect",
-  "Business Analyst",
-  "Marketing Manager",
-  "HR Manager",
-  "Financial Analyst",
-  "Consultant",
-];
-
-const industries = [
-  "Information Technology",
-  "Finance & Banking",
-  "Healthcare",
-  "Education",
-  "E-commerce",
-  "Manufacturing",
-  "Consulting",
-  "Retail",
-  "Telecommunications",
-  "Media & Entertainment",
-  "Real Estate",
-  "Automotive",
-  "Pharmaceuticals",
-  "Energy",
-  "Government",
-];
-
-const skillsList = [
-  "JavaScript",
-  "Python",
-  "React",
-  "Node.js",
-  "Java",
-  "SQL",
-  "AWS",
-  "Docker",
-  "Kubernetes",
-  "Machine Learning",
-  "Data Analysis",
-  "Project Management",
-  "Communication",
-  "Leadership",
-  "Problem Solving",
-];
+import formStyles from "../formStep/formStep.module.css";
 
 const Step3 = () => {
   const {
@@ -77,7 +22,7 @@ const Step3 = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     const nextValue =
-      name === "yearsOfExperience" ? value.replace(/[^0-9.]/g, "") : value;
+      name === "yearsOfExperience" ? sanitizeDecimal(value) : value;
     updateProfessionalBackground({ [name]: nextValue });
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -85,7 +30,14 @@ const Step3 = () => {
   };
 
   const handleAutocompleteChange = (name) => (event, value) => {
-    updateProfessionalBackground({ [name]: value || "" });
+    if (name === "skills") {
+      const normalized = (value || [])
+        .map((item) => item.trim())
+        .filter(Boolean);
+      updateProfessionalBackground({ skills: normalized });
+    } else {
+      updateProfessionalBackground({ [name]: value || "" });
+    }
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -115,7 +67,7 @@ const Step3 = () => {
       }
     }
 
-    if (!professionalBackground.skills.trim()) {
+    if (!professionalBackground.skills.length) {
       newErrors.skills = "Skills are required";
     }
 
@@ -151,12 +103,12 @@ const Step3 = () => {
 
   return (
     <FormStep title="Professional Background">
-      <Box component="form" className={styles.form}>
-        <Box className={styles.section}>
-          <p className={styles.sectionTitle}>Current Employment</p>
-          <Box className={styles.gridTwo}>
+      <Box component="form" className={formStyles.form}>
+        <Box className={formStyles.section}>
+          <p className={formStyles.sectionTitle}>Current Employment</p>
+          <Box className={formStyles.gridTwo}>
             <Autocomplete
-              freeSolo
+              // freeSolo
               options={jobTitles}
               value={professionalBackground.currentJobTitle}
               onChange={handleAutocompleteChange("currentJobTitle")}
@@ -186,9 +138,9 @@ const Step3 = () => {
             />
           </Box>
 
-          <Box className={styles.gridTwo}>
+          <Box className={formStyles.gridTwo}>
             <Autocomplete
-              freeSolo
+              // freeSolo
               options={industries}
               value={professionalBackground.industry}
               onChange={handleAutocompleteChange("industry")}
@@ -220,25 +172,22 @@ const Step3 = () => {
           </Box>
         </Box>
 
-        <Box className={styles.section}>
-          <p className={styles.sectionTitle}>Skills & Experience</p>
+        <Box className={formStyles.section}>
+          <p className={formStyles.sectionTitle}>Skills & Experience</p>
           <Autocomplete
-            freeSolo
+            // freeSolo
+            multiple
+            filterSelectedOptions
             options={skillsList}
             value={professionalBackground.skills}
             onChange={handleAutocompleteChange("skills")}
-            onInputChange={(e, value) =>
-              updateProfessionalBackground({ skills: value })
-            }
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="Key Skills"
                 variant="outlined"
                 error={!!errors.skills}
-                helperText={
-                  errors.skills || "Comma separated: React, Node.js, Python"
-                }
+                helperText={errors.skills || "Press Enter to add a skill"}
                 placeholder="React, Node.js, Python, SQL..."
               />
             )}
@@ -257,9 +206,9 @@ const Step3 = () => {
           />
         </Box>
 
-        <Box className={styles.section}>
-          <p className={styles.sectionTitle}>Online Presence (Optional)</p>
-          <Box className={styles.gridTwo}>
+        <Box className={formStyles.section}>
+          <p className={formStyles.sectionTitle}>Online Presence (Optional)</p>
+          <Box className={formStyles.gridTwo}>
             <TextField
               label="LinkedIn URL"
               variant="outlined"
