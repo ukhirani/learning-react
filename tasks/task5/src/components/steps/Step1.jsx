@@ -1,6 +1,7 @@
-import { Box, Button } from "@mui/material";
 import { useFormContext } from "../../context/FormContext";
 import ForwardButton from "../buttons/forwardButton/forwardButton";
+import BottomBar from "../bottomBar/BottomBar.jsx";
+import FormStep from "../formStep/formStep";
 
 const Step1 = () => {
   const { setStep } = useFormContext();
@@ -11,9 +12,12 @@ const Step1 = () => {
   };
 
   return (
-    <Box>
-      Step 1<ForwardButton onClick={nextStep}>Next Step</ForwardButton>
-    </Box>
+    <FormStep>
+      Step 1
+      <BottomBar>
+        <ForwardButton onClick={nextStep}>Next Step</ForwardButton>
+      </BottomBar>
+    </FormStep>
   );
 };
 
