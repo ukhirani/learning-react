@@ -1,2 +1,6 @@
 .forwardButton {
+  color: #ffffff !important;
+  text-transform: none !important;
+  padding: 0.6rem 1.6rem !important;
+  border-radius: 999px !important;
 }

@@ -17,8 +17,7 @@ const Step2 = () => {
   };
 
   return (
-    <FormStep>
-      Step 2
+    <FormStep title={"Step 2"}>
       <BottomBar>
         <BackwardButton onClick={prevStep}>Previous Step</BackwardButton>
         <ForwardButton onClick={nextStep}>Next Step</ForwardButton>
