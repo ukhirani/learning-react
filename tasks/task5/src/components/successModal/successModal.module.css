@@ -1,0 +1,143 @@
+.modalContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 700px;
+  max-height: 85vh;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+  outline: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  color: white;
+}
+
+.successIcon {
+  font-size: 48px !important;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-weight: 700 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.subtitle {
+  opacity: 0.9;
+  font-size: 0.95rem !important;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 2rem;
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600 !important;
+  color: #1f2a44;
+  margin-bottom: 0.75rem !important;
+  font-size: 1.05rem !important;
+}
+
+.chip {
+  background-color: #1976d2 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.divider {
+  margin-bottom: 1rem !important;
+}
+
+.fieldsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.fieldLabel {
+  font-size: 0.75rem !important;
+  color: #667085;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500 !important;
+}
+
+.fieldValue {
+  font-size: 0.95rem !important;
+  color: #1f2a44;
+  word-break: break-word;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  border-top: 1px solid #edf0f7;
+  background-color: #fafbfc;
+}
+
+.closeButton {
+  text-transform: none !important;
+  border-color: #d0d5dd !important;
+  color: #344054 !important;
+}
+
+.startOverButton {
+  text-transform: none !important;
+  background-color: #1976d2 !important;
+}
+
+@media (max-width: 600px) {
+  .modalContainer {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .fieldsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    padding: 1rem;
+    flex-direction: column-reverse;
+  }
+
+  .closeButton,
+  .startOverButton {
+    width: 100%;
+  }
+}
