@@ -16,6 +16,7 @@ const Step3 = () => {
     errors,
     setErrors,
     setIsModalOpen,
+    clearFormData,
   } = useFormContext();
   const professionalBackground = formData.professionalBackground;
 

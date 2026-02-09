@@ -14,7 +14,7 @@ import { useFormContext } from "../../context/FormContext";
 import { countries, states } from "../../constants/options";
 import {
   isValidEmail,
-  isValidIndianMobile,
+  isValidMobile,
   isValidName,
   isValidPinCode,
   sanitizeAlpha,
@@ -92,8 +92,8 @@ const Step1 = () => {
 
     if (!personalDetails.phone.trim()) {
       newErrors.phone = "Phone number is required";
-    } else if (!isValidIndianMobile(personalDetails.phone)) {
-      newErrors.phone = "Enter a valid 10-digit Indian mobile number";
+    } else if (!isValidMobile(personalDetails.phone)) {
+      newErrors.phone = "Enter a valid 10-digit mobile number";
     }
 
     if (!personalDetails.dateOfBirth) {

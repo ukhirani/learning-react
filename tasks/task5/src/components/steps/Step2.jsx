@@ -178,7 +178,6 @@ const Step2 = () => {
               fullWidth
               inputProps={{ inputMode: "decimal" }}
             />
-            <div></div>
           </Box>
         </Box>
 
@@ -205,7 +204,7 @@ const Step2 = () => {
             fullWidth
             multiline
             rows={2}
-            placeholder="AWS Certified, Google Cloud, PMP, etc."
+            placeholder="AWS, Google Cloud, etc."
           />
         </Box>
       </Box>

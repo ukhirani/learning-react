@@ -88,7 +88,6 @@ const FormContextProvider = ({ children }) => {
     "Professional Background",
   ];
 
-  // Sync to localStorage whenever formData changes
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
   }, [formData]);

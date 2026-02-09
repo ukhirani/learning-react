@@ -21,25 +21,16 @@ const SuccessModal = () => {
   };
 
   const handleStartOver = () => {
-    clearFormData();
     setIsModalOpen(false);
+    clearFormData();
   };
 
   const handlePrint = () => {
     window.print();
   };
 
-  const formatLabel = (key) => {
-    return key
-      .replace(/([A-Z])/g, " $1")
-      .replace(/^./, (str) => str.toUpperCase())
-      .trim();
-  };
-
   const renderField = (label, value) => {
-    const displayValue = Array.isArray(value)
-      ? value.filter(Boolean).join(", ")
-      : value;
+    const displayValue = Array.isArray(value) ? value.join(", ") : value;
     if (!displayValue) return null;
     return (
       <Box className={styles.field}>
@@ -56,18 +47,7 @@ const SuccessModal = () => {
       aria-labelledby="success-modal-title"
     >
       <Box className={`${styles.modalContainer} ${styles.printArea}`}>
-        <Box className={styles.header}>
-          <CheckCircleOutlineIcon className={styles.successIcon} />
-          <Typography variant="h5" className={styles.title}>
-            Form Submitted Successfully!
-          </Typography>
-          <Typography className={styles.subtitle}>
-            Here's a summary of the information you provided
-          </Typography>
-        </Box>
-
         <Box className={styles.content}>
-          {/* Personal Details Section */}
           <Box className={styles.section}>
             <Typography className={styles.sectionTitle}>
               <PersonOutlineIcon fontSize="small" />
@@ -90,7 +70,6 @@ const SuccessModal = () => {
             </Box>
           </Box>
 
-          {/* Academic Background Section */}
           <Box className={styles.section}>
             <Typography className={styles.sectionTitle}>
               <SchoolOutlinedIcon fontSize="small" />
@@ -111,7 +90,6 @@ const SuccessModal = () => {
             </Box>
           </Box>
 
-          {/* Professional Background Section */}
           <Box className={styles.section}>
             <Typography className={styles.sectionTitle}>
               <WorkOutlineIcon fontSize="small" />
