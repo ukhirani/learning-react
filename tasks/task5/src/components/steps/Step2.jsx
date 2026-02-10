@@ -57,9 +57,13 @@ const Step2 = () => {
     if (!academicBackground.graduationYear.trim()) {
       newErrors.graduationYear = "Graduation year is required";
     } else {
-      if (!isValidYear(academicBackground.graduationYear, 1900)) {
+      const dob = formData.personalDetails.dateOfBirth;
+      if (!isValidYear(academicBackground.graduationYear, dob)) {
+        const dobYear = new Date(dob).getFullYear();
         newErrors.graduationYear =
-          "Please enter a valid year (not in the future)";
+          "Graduation Date cannot be on or before Year of Birth (" +
+          dobYear +
+          ")";
       }
     }
 

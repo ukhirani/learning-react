@@ -1,3 +1,5 @@
+import { useFormContext } from "../context/FormContext";
+
 export const sanitizeAlpha = (
   value = "", // alpha here means sanitize alphabets
 ) => value.replace(/[^A-Za-z\s.'-]/g, "");
@@ -17,7 +19,7 @@ export const sanitizeDecimal = (value = "") => {
 };
 
 export const isValidEmail = (value = "") =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); // email regex testing
+  /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value);
 
 export const isValidName = (value = "") =>
   /^[A-Za-z][A-Za-z\s.'-]*$/.test(value); // name regex testing -> name cannot have anything except alphabets
@@ -26,11 +28,11 @@ export const isValidMobile = (value = "") => /^[0-9]{10}$/.test(value);
 
 export const isValidPinCode = (value = "") => /^\d{6}$/.test(value); // should be 6 digit pin code
 
-export const isValidYear = (value = "") => {
-  if (!/^\d{4}$/.test(value)) return false;
-  const year = parseInt(value, 10);
-  const currentYear = new Date().getFullYear();
-  return year <= currentYear; // graduation year shouldn't be in the future
+export const isValidYear = (gradDate, dob) => {
+  if (!/^\d{4}$/.test(gradDate)) return false; // year should be strictly of length 4
+  const dobYear = new Date(dob).getFullYear();
+  const gradYear = parseInt(gradDate, 10);
+  return gradYear > dobYear;
 };
 
 export const isValidGpa = (value = "") => {
