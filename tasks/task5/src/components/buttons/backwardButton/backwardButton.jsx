@@ -2,13 +2,19 @@ import { Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import styles from "./button.module.css";
 
-const BackwardButton = ({ children, onClick }) => {
+const BackwardButton = ({
+  color = "primary",
+  children,
+  onClick,
+  icon = <ArrowBackIcon />,
+}) => {
   return (
     <Button
       className={styles.forwardButton}
       variant="contained"
+      color={color}
       onClick={onClick}
-      startIcon={<ArrowBackIcon />}
+      startIcon={icon}
     >
       {children}
     </Button>

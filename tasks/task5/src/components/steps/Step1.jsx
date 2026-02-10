@@ -1,3 +1,4 @@
+import { RestartAltOutlined } from "@mui/icons-material";
 import {
   Autocomplete,
   Box,
@@ -8,6 +9,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import BackwardButton from "../buttons/backwardButton/backwardButton.jsx";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useFormContext } from "../../context/FormContext";
@@ -26,8 +28,14 @@ import FormStep from "../formStep/formStep";
 import formStyles from "../formStep/formStep.module.css";
 
 const Step1 = () => {
-  const { setStep, formData, updatePersonalDetails, errors, setErrors } =
-    useFormContext();
+  const {
+    clearFormData,
+    setStep,
+    formData,
+    updatePersonalDetails,
+    errors,
+    setErrors,
+  } = useFormContext();
   const personalDetails = formData.personalDetails;
 
   const handleChange = (event) => {
@@ -170,6 +178,7 @@ const Step1 = () => {
           <Box className={formStyles.gridTwo}>
             <DatePicker
               label="Date of Birth"
+              maxDate={new dayjs()} // Prevent selection of future dates
               value={
                 personalDetails.dateOfBirth
                   ? dayjs(personalDetails.dateOfBirth)
@@ -337,6 +346,13 @@ const Step1 = () => {
       </Box>
 
       <BottomBar>
+        <BackwardButton
+          color={"error"}
+          icon={<RestartAltOutlined />}
+          onClick={clearFormData}
+        >
+          Reset
+        </BackwardButton>
         <ForwardButton onClick={nextStep}>Next Step</ForwardButton>
       </BottomBar>
     </FormStep>
