@@ -79,6 +79,7 @@ export const institutions = [
   "Oxford University",
   "Cambridge University",
   "National University of Singapore",
+  "Others",
 ];
 
 export const jobTitles = [
@@ -100,6 +101,10 @@ export const jobTitles = [
   "HR Manager",
   "Financial Analyst",
   "Consultant",
+  "Others",
+  "Unemployed",
+  "Student",
+  "Self-Employed",
 ];
 
 export const industries = [

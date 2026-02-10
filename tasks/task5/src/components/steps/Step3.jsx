@@ -103,7 +103,7 @@ const Step3 = () => {
   };
 
   return (
-    <FormStep title="Professional Background">
+    <FormStep title="Professional Background *">
       <Box component="form" className={formStyles.form}>
         <Box className={formStyles.section}>
           <p className={formStyles.sectionTitle}>Current Employment</p>
@@ -119,7 +119,7 @@ const Step3 = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Current Job Title"
+                  label="Current Job Title *"
                   variant="outlined"
                   error={!!errors.currentJobTitle}
                   helperText={errors.currentJobTitle}
@@ -127,7 +127,7 @@ const Step3 = () => {
               )}
             />
             <TextField
-              label="Company"
+              label="Company *"
               variant="outlined"
               name="company"
               value={professionalBackground.company}
@@ -151,7 +151,7 @@ const Step3 = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Industry"
+                  label="Industry *"
                   variant="outlined"
                   error={!!errors.industry}
                   helperText={errors.industry}
@@ -159,7 +159,7 @@ const Step3 = () => {
               )}
             />
             <TextField
-              label="Years of Experience"
+              label="Years of Experience *"
               variant="outlined"
               name="yearsOfExperience"
               type="number"
@@ -185,7 +185,7 @@ const Step3 = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Key Skills"
+                label="Key Skills *"
                 variant="outlined"
                 error={!!errors.skills}
                 helperText={errors.skills || "Press Enter to add a skill"}
@@ -195,7 +195,7 @@ const Step3 = () => {
           />
 
           <TextField
-            label="Job Description / Responsibilities"
+            label="Job Description / Responsibilities *"
             variant="outlined"
             name="jobDescription"
             value={professionalBackground.jobDescription}

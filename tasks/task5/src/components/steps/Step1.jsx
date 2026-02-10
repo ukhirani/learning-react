@@ -146,13 +146,13 @@ const Step1 = () => {
   };
 
   return (
-    <FormStep title="Personal Details">
+    <FormStep title="Personal Details *">
       <Box component="form" className={formStyles.form}>
         <Box className={formStyles.section}>
           <p className={formStyles.sectionTitle}>Basic Information</p>
           <Box className={formStyles.gridTwo}>
             <TextField
-              label="First Name"
+              label="First Name *"
               variant="outlined"
               name="firstName"
               value={personalDetails.firstName}
@@ -163,7 +163,7 @@ const Step1 = () => {
               autoComplete="given-name"
             />
             <TextField
-              label="Last Name"
+              label="Last Name *"
               variant="outlined"
               name="lastName"
               value={personalDetails.lastName}
@@ -177,7 +177,7 @@ const Step1 = () => {
 
           <Box className={formStyles.gridTwo}>
             <DatePicker
-              label="Date of Birth"
+              label="Date of Birth *"
               maxDate={new dayjs()} // Prevent selection of future dates
               value={
                 personalDetails.dateOfBirth
@@ -205,11 +205,11 @@ const Step1 = () => {
               }}
             />
             <FormControl variant="outlined" fullWidth error={!!errors.gender}>
-              <InputLabel id="gender-label">Gender</InputLabel>
+              <InputLabel id="gender-label">Gender *</InputLabel>
               <Select
                 labelId="gender-label"
                 name="gender"
-                label="Gender"
+                label="Gender *"
                 value={personalDetails.gender}
                 onChange={handleChange}
               >
@@ -229,7 +229,7 @@ const Step1 = () => {
           <p className={formStyles.sectionTitle}>Contact Details</p>
           <Box className={formStyles.gridTwo}>
             <TextField
-              label="Email"
+              label="Email *"
               variant="outlined"
               name="email"
               type="email"
@@ -241,7 +241,7 @@ const Step1 = () => {
               autoComplete="email"
             />
             <TextField
-              label="Phone"
+              label="Phone *"
               variant="outlined"
               name="phone"
               type="tel"
@@ -263,7 +263,7 @@ const Step1 = () => {
         <Box className={formStyles.section}>
           <p className={formStyles.sectionTitle}>Address</p>
           <TextField
-            label="Address"
+            label="Address *"
             variant="outlined"
             name="address"
             value={personalDetails.address}
@@ -278,7 +278,7 @@ const Step1 = () => {
 
           <Box className={formStyles.gridTwo}>
             <TextField
-              label="City"
+              label="City *"
               variant="outlined"
               name="city"
               value={personalDetails.city}
@@ -297,7 +297,7 @@ const Step1 = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="State"
+                  label="State *"
                   variant="outlined"
                   error={!!errors.state}
                   helperText={errors.state}
@@ -309,7 +309,7 @@ const Step1 = () => {
 
           <Box className={formStyles.gridTwo}>
             <TextField
-              label="Zip Code"
+              label="Zip Code *"
               variant="outlined"
               name="zipCode"
               value={personalDetails.zipCode}
@@ -333,7 +333,7 @@ const Step1 = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Country"
+                  label="Country *"
                   variant="outlined"
                   error={!!errors.country}
                   helperText={errors.country}

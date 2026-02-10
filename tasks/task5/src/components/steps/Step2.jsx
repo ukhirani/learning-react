@@ -88,7 +88,7 @@ const Step2 = () => {
   };
 
   return (
-    <FormStep title="Academic Background">
+    <FormStep title="Academic Background *">
       <Box component="form" className={formStyles.form}>
         <Box className={formStyles.section}>
           <p className={formStyles.sectionTitle}>Education Details</p>
@@ -104,7 +104,7 @@ const Step2 = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Highest Degree"
+                  label="Highest Degree *"
                   variant="outlined"
                   error={!!errors.highestDegree}
                   helperText={errors.highestDegree}
@@ -122,7 +122,7 @@ const Step2 = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Field of Study"
+                  label="Field of Study *"
                   variant="outlined"
                   error={!!errors.fieldOfStudy}
                   helperText={errors.fieldOfStudy}
@@ -143,7 +143,7 @@ const Step2 = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Institution"
+                  label="Institution *"
                   variant="outlined"
                   error={!!errors.institution}
                   helperText={errors.institution}
@@ -151,7 +151,7 @@ const Step2 = () => {
               )}
             />
             <TextField
-              label="Graduation Year"
+              label="Graduation Year *"
               variant="outlined"
               name="graduationYear"
               type="number"
