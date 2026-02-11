@@ -151,22 +151,18 @@
     margin: 12mm;
   }
 
-  body * {
-    visibility: hidden;
+  body {
+    margin: 0;
+    padding: 20px;
   }
 
-  .printArea,
-  .printArea * {
-    visibility: visible;
-  }
-
-  .printArea {
+  .modalContainer {
     position: static !important;
-    transform: none !important;
     width: 100% !important;
-    max-width: none !important;
-    max-height: none !important;
+    max-width: 100% !important;
     height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
     box-shadow: none !important;
     border: 1px solid #e5e7eb !important;
     background: #ffffff !important;
@@ -187,5 +183,9 @@
   .section {
     page-break-inside: avoid;
     break-inside: avoid;
+  }
+
+  .sectionTitle :global(.MuiSvgIcon-root) {
+    display: none !important;
   }
 }

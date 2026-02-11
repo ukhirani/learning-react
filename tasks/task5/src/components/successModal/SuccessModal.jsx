@@ -48,7 +48,13 @@ const SuccessModal = () => {
   };
 
   const handlePrint = () => {
+    const printContents = document.getElementById("print-area").innerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
     window.print();
+    document.body.innerHTML = originalContents;
+    window.location.reload();
   };
 
   const renderField = (label, value) => {
@@ -68,7 +74,10 @@ const SuccessModal = () => {
       onClose={handleClose}
       aria-labelledby="success-modal-title"
     >
-      <Box className={`${styles.modalContainer} ${styles.printArea}`}>
+      <Box
+        id="print-area"
+        className={`${styles.modalContainer} ${styles.printArea}`}
+      >
         <Box className={styles.content}>
           <Box className={styles.section}>
             <Typography className={styles.sectionTitle}>
