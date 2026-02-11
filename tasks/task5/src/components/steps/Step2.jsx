@@ -7,7 +7,7 @@ import {
   sanitizeDecimal,
   sanitizeDigits,
 } from "../../utils/formUtils";
-import ForwardButton from "../buttons/forwardButton/forwardButton";
+import ForwardButton from "../buttons/forwardButton/ForwardButton.jsx";
 import BackwardButton from "../buttons/backwardButton/BackwardButton.jsx";
 import BottomBar from "../bottomBar/BottomBar.jsx";
 import FormStep from "../formStep/FormStep.jsx";

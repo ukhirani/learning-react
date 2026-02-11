@@ -22,7 +22,7 @@ import {
   sanitizeAlpha,
   sanitizeDigits,
 } from "../../utils/formUtils";
-import ForwardButton from "../buttons/forwardButton/forwardButton";
+import ForwardButton from "../buttons/forwardButton/ForwardButton.jsx";
 import BottomBar from "../bottomBar/BottomBar.jsx";
 import FormStep from "../formStep/FormStep.jsx";
 import formStyles from "../formStep/formStep.module.css";

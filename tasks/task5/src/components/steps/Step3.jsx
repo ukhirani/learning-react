@@ -2,7 +2,7 @@ import { Autocomplete, Box, TextField } from "@mui/material";
 import { useFormContext } from "../../context/FormContext";
 import { industries, jobTitles, skillsList } from "../../constants/options";
 import { sanitizeDecimal } from "../../utils/formUtils";
-import ForwardButton from "../buttons/forwardButton/forwardButton";
+import ForwardButton from "../buttons/forwardButton/ForwardButton.jsx";
 import BackwardButton from "../buttons/backwardButton/BackwardButton.jsx";
 import BottomBar from "../bottomBar/BottomBar.jsx";
 import FormStep from "../formStep/FormStep.jsx";
@@ -96,7 +96,9 @@ const Step3 = () => {
 
   const handleSubmit = () => {
     if (!validateProfessionalBackground()) return;
-    setIsModalOpen(true);
+    if (confirm("Are you sure you want to submit the form ?")) {
+      clearFormData();
+    }
   };
 
   const prevStep = () => {
