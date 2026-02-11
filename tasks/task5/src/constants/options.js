@@ -1,11 +1,37 @@
-export const locations = [
+export const countries = [
+  "Australia",
+  "Brazil",
+  "Canada",
+  "China",
+  "France",
+  "Germany",
+  "India",
+  "Japan",
+  "Netherlands",
+  "Singapore",
+  "Sweden",
+  "Switzerland",
+  "UAE",
+  "United Kingdom",
+  "United States",
+];
+
+export const states = [
   "California",
+  "Delhi",
   "Florida",
+  "Gujarat",
+  "Karnataka",
   "Kerala",
+  "Maharashtra",
   "New York",
+  "Rajasthan",
+  "Tamil Nadu",
   "Telangana",
   "Texas",
+  "Uttar Pradesh",
   "Washington",
+  "West Bengal",
 ];
 
 export const degrees = [
@@ -15,9 +41,9 @@ export const degrees = [
   "Doctorate (PhD)",
   "High School Diploma",
   "JD (Law)",
-  "Master's Degree",
   "MBA",
   "MD (Medical Doctor)",
+  "Master's Degree",
   "Professional Certificate",
 ];
 
@@ -49,8 +75,8 @@ export const institutions = [
   "IIT Delhi",
   "IIT Madras",
   "MIT",
-  "NIT Trichy",
   "National University of Singapore",
+  "NIT Trichy",
   "Others",
   "Oxford University",
   "Stanford University",
@@ -77,8 +103,8 @@ export const jobTitles = [
   "Software Engineer",
   "Student",
   "UI Designer",
-  "UX Designer",
   "Unemployed",
+  "UX Designer",
 ];
 
 export const industries = [

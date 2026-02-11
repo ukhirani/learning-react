@@ -3,9 +3,9 @@ import { useFormContext } from "../../context/FormContext";
 import { industries, jobTitles, skillsList } from "../../constants/options";
 import { sanitizeDecimal } from "../../utils/formUtils";
 import ForwardButton from "../buttons/forwardButton/forwardButton";
-import BackwardButton from "../buttons/backwardButton/backwardButton.jsx";
+import BackwardButton from "../buttons/backwardButton/BackwardButton.jsx";
 import BottomBar from "../bottomBar/BottomBar.jsx";
-import FormStep from "../formStep/formStep";
+import FormStep from "../formStep/FormStep.jsx";
 import formStyles from "../formStep/formStep.module.css";
 
 const Step3 = () => {
@@ -81,10 +81,12 @@ const Step3 = () => {
     }
 
     if (professionalBackground.portfolioUrl.trim()) {
-      try {
-        new URL(professionalBackground.portfolioUrl);
-      } catch {
-        newErrors.portfolioUrl = "Please enter a valid URL";
+      const urlRegex =
+        /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/i;
+      if (professionalBackground.portfolioUrl.trim()) {
+        if (!urlRegex.test(professionalBackground.portfolioUrl.trim())) {
+          newErrors.portfolioUrl = "Please enter a valid URL";
+        }
       }
     }
 
@@ -135,7 +137,7 @@ const Step3 = () => {
               error={!!errors.company}
               helperText={errors.company}
               fullWidth
-              autoComplete="organization"
+              autoComplete="off"
             />
           </Box>
 

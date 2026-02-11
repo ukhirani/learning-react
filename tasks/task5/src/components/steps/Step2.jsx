@@ -8,9 +8,9 @@ import {
   sanitizeDigits,
 } from "../../utils/formUtils";
 import ForwardButton from "../buttons/forwardButton/forwardButton";
-import BackwardButton from "../buttons/backwardButton/backwardButton.jsx";
+import BackwardButton from "../buttons/backwardButton/BackwardButton.jsx";
 import BottomBar from "../bottomBar/BottomBar.jsx";
-import FormStep from "../formStep/formStep";
+import FormStep from "../formStep/FormStep.jsx";
 import formStyles from "../formStep/formStep.module.css";
 
 const Step2 = () => {

@@ -9,7 +9,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import BackwardButton from "../buttons/backwardButton/backwardButton.jsx";
+import BackwardButton from "../buttons/backwardButton/BackwardButton.jsx";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useFormContext } from "../../context/FormContext";
@@ -24,7 +24,7 @@ import {
 } from "../../utils/formUtils";
 import ForwardButton from "../buttons/forwardButton/forwardButton";
 import BottomBar from "../bottomBar/BottomBar.jsx";
-import FormStep from "../formStep/formStep";
+import FormStep from "../formStep/FormStep.jsx";
 import formStyles from "../formStep/formStep.module.css";
 
 const Step1 = () => {
@@ -107,12 +107,11 @@ const Step1 = () => {
     if (!personalDetails.dateOfBirth) {
       newErrors.dateOfBirth = "Date of birth is required";
     } else {
-      const dobCheck = new dayjs(nextValue);
+      const dobCheck = new dayjs(personalDetails.dateOfBirth);
       if (new dayjs() < dobCheck) {
-        setErrors((prev) => ({
-          ...prev,
-          dateOfBirth: "DOB cannot be in future",
-        }));
+        newErrors.dateOfBirth = "Date of birth cannot be in future"; // validation for when user enters the date via keyboard
+      } else {
+        console.log("it passed");
       }
     }
 
