@@ -8,7 +8,6 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useFormContext } from "../../context/FormContext";
-import { useConfirm } from "../confirmDialog/ConfirmDialog";
 import styles from "./successModal.module.css";
 
 const SuccessModal = () => {
@@ -21,6 +20,7 @@ const SuccessModal = () => {
     removeApplication,
     startEditingApplication,
     clearFormData,
+    openConfirm,
   } = useFormContext();
   const navigate = useNavigate();
 
@@ -44,16 +44,15 @@ const SuccessModal = () => {
     navigate("/");
   };
 
-  const confirm = useConfirm();
-
-  const handleRemove = async () => {
+  const handleRemove = () => {
     if (!selectedApplicationId) return;
-    const ok = await confirm("Remove this application permanently?");
-    if (ok) {
-      removeApplication(selectedApplicationId);
-      clearFormData();
-      setIsModalOpen(false);
-    }
+    openConfirm("Remove this application permanently?", (ok) => {
+      if (ok) {
+        removeApplication(selectedApplicationId);
+        clearFormData();
+        setIsModalOpen(false);
+      }
+    });
   };
 
   const handlePrint = () => {

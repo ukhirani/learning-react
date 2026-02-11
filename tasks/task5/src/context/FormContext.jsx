@@ -109,6 +109,9 @@ const FormContextProvider = ({ children }) => {
   const [applications, setApplications] = useState(loadApplications);
   const [selectedApplicationId, setSelectedApplicationId] = useState(null);
   const [editingApplicationId, setEditingApplicationId] = useState(null);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [confirmCallback, setConfirmCallback] = useState(null);
 
   const stepLabels = [
     "Personal Details",
@@ -204,6 +207,22 @@ const FormContextProvider = ({ children }) => {
     setStep(0);
   };
 
+  const openConfirm = (message, callback) => {
+    setConfirmMessage(message);
+    setConfirmCallback(() => callback);
+    setConfirmOpen(true);
+  };
+
+  const onConfirmOk = () => {
+    setConfirmOpen(false);
+    confirmCallback(true);
+  };
+
+  const onConfirmCancel = () => {
+    setConfirmOpen(false);
+    confirmCallback(false);
+  };
+
   const value = {
     step,
     setStep,
@@ -225,6 +244,11 @@ const FormContextProvider = ({ children }) => {
     removeApplication,
     selectApplication,
     startEditingApplication,
+    confirmOpen,
+    confirmMessage,
+    onConfirmOk,
+    onConfirmCancel,
+    openConfirm,
   };
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;

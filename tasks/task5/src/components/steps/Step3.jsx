@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useFormContext } from "../../context/FormContext";
-import { useConfirm } from "../confirmDialog/ConfirmDialog";
 import { industries, jobTitles, skillsList } from "../../constants/options";
 import { sanitizeDecimal } from "../../utils/formUtils";
 import ForwardButton from "../buttons/forwardButton/ForwardButton.jsx";
@@ -22,8 +21,8 @@ const Step3 = () => {
     setIsModalOpen,
     clearFormData,
     saveApplication,
+    openConfirm,
   } = useFormContext();
-  const confirm = useConfirm();
   const professionalBackground = formData.professionalBackground;
 
   const handleChange = (event) => {
@@ -100,13 +99,14 @@ const Step3 = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!validateProfessionalBackground()) return;
-    const ok = await confirm("Are you sure you want to submit the form?");
-    if (ok) {
-      saveApplication(formData);
-      clearFormData();
-    }
+    openConfirm("Are you sure you want to submit the form?", (ok) => {
+      if (ok) {
+        saveApplication(formData);
+        clearFormData();
+      }
+    });
   };
 
   const prevStep = () => {
