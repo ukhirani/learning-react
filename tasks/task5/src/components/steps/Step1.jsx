@@ -1,16 +1,6 @@
 import { RestartAltOutlined } from "@mui/icons-material";
-import {
-  Autocomplete,
-  Box,
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import BackwardButton from "../buttons/backwardButton/BackwardButton.jsx";
-import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useFormContext } from "../../context/FormContext";
 import { countries, states } from "../../constants/options";
@@ -25,6 +15,9 @@ import {
 import ForwardButton from "../buttons/forwardButton/ForwardButton.jsx";
 import BottomBar from "../bottomBar/BottomBar.jsx";
 import FormStep from "../formStep/FormStep.jsx";
+import BasicInformation from "./Step1/BasicInformation.jsx";
+import ContactDetails from "./Step1/ContactDetails.jsx";
+import Address from "./Step1/Address.jsx";
 import formStyles from "../formStep/formStep.module.css";
 
 const Step1 = () => {
@@ -155,203 +148,27 @@ const Step1 = () => {
   return (
     <FormStep title="Personal Details *">
       <Box component="form" className={formStyles.form}>
-        <Box className={formStyles.section}>
-          <p className={formStyles.sectionTitle}>Basic Information</p>
-          <Box className={formStyles.gridTwo}>
-            <TextField
-              label="First Name *"
-              variant="outlined"
-              name="firstName"
-              value={personalDetails.firstName}
-              onChange={handleChange}
-              error={!!errors.firstName}
-              helperText={errors.firstName}
-              fullWidth
-              autoComplete="given-name"
-            />
-            <TextField
-              label="Last Name *"
-              variant="outlined"
-              name="lastName"
-              value={personalDetails.lastName}
-              onChange={handleChange}
-              error={!!errors.lastName}
-              helperText={errors.lastName}
-              fullWidth
-              autoComplete="family-name"
-            />
-          </Box>
-
-          <Box className={formStyles.gridTwo}>
-            <DatePicker
-              label="Date of Birth *"
-              maxDate={new dayjs()} // Prevent selection of future dates
-              value={
-                personalDetails.dateOfBirth
-                  ? dayjs(personalDetails.dateOfBirth)
-                  : null
-              }
-              onChange={(value) => {
-                const nextValue = value?.isValid()
-                  ? value.format("YYYY-MM-DD")
-                  : "";
-
-                updatePersonalDetails({ dateOfBirth: nextValue });
-
-                if (errors.dateOfBirth) {
-                  setErrors((prev) => ({ ...prev, dateOfBirth: "" }));
-                }
-              }}
-              format="DD/MM/YYYY"
-              slotProps={{
-                textField: {
-                  variant: "outlined",
-                  fullWidth: true,
-                  error: !!errors.dateOfBirth,
-                  helperText: errors.dateOfBirth,
-                  autoComplete: "bday",
-                },
-              }}
-            />
-            <FormControl variant="outlined" fullWidth error={!!errors.gender}>
-              <InputLabel id="gender-label">Gender *</InputLabel>
-              <Select
-                labelId="gender-label"
-                name="gender"
-                label="Gender *"
-                value={personalDetails.gender}
-                onChange={handleChange}
-              >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="non-binary">Non-binary</MenuItem>
-                <MenuItem value="prefer-not-to-say">Prefer not to say</MenuItem>
-              </Select>
-              {errors.gender && (
-                <FormHelperText>{errors.gender}</FormHelperText>
-              )}
-            </FormControl>
-          </Box>
-        </Box>
-
-        <Box className={formStyles.section}>
-          <p className={formStyles.sectionTitle}>Contact Details</p>
-          <Box className={formStyles.gridTwo}>
-            <TextField
-              label="Email *"
-              variant="outlined"
-              name="email"
-              type="email"
-              value={personalDetails.email}
-              onChange={handleChange}
-              error={!!errors.email}
-              helperText={errors.email}
-              fullWidth
-              autoComplete="email"
-            />
-            <TextField
-              label="Phone *"
-              variant="outlined"
-              name="phone"
-              type="tel"
-              value={personalDetails.phone}
-              onChange={handleChange}
-              error={!!errors.phone}
-              helperText={errors.phone}
-              fullWidth
-              inputProps={{
-                inputMode: "numeric",
-                pattern: "[0-9]*",
-                maxLength: 10,
-              }}
-              autoComplete="tel"
-            />
-          </Box>
-        </Box>
-
-        <Box className={formStyles.section}>
-          <p className={formStyles.sectionTitle}>Address</p>
-          <TextField
-            label="Address *"
-            variant="outlined"
-            name="address"
-            value={personalDetails.address}
-            onChange={handleChange}
-            error={!!errors.address}
-            helperText={errors.address}
-            fullWidth
-            multiline
-            rows={2}
-            autoComplete="street-address"
-          />
-
-          <Box className={formStyles.gridTwo}>
-            <TextField
-              label="City *"
-              variant="outlined"
-              name="city"
-              value={personalDetails.city}
-              onChange={handleChange}
-              error={!!errors.city}
-              helperText={errors.city}
-              fullWidth
-              autoComplete="address-level2"
-            />
-            <Autocomplete
-              // freeSolo
-              options={states}
-              value={personalDetails.state}
-              onChange={handleAutocompleteChange("state")}
-              onInputChange={handleAutocompleteInputChange("state")}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="State *"
-                  variant="outlined"
-                  error={!!errors.state}
-                  helperText={errors.state}
-                  autoComplete="off"
-                />
-              )}
-            />
-          </Box>
-
-          <Box className={formStyles.gridTwo}>
-            <TextField
-              label="Zip Code *"
-              variant="outlined"
-              name="zipCode"
-              value={personalDetails.zipCode}
-              onChange={handleChange}
-              error={!!errors.zipCode}
-              helperText={errors.zipCode}
-              fullWidth
-              inputProps={{
-                inputMode: "numeric",
-                pattern: "[0-9]*",
-                maxLength: 6,
-              }}
-              autoComplete="postal-code"
-            />
-            <Autocomplete
-              // freeSolo
-              options={countries}
-              value={personalDetails.country}
-              onChange={handleAutocompleteChange("country")}
-              onInputChange={handleAutocompleteInputChange("country")}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Country *"
-                  variant="outlined"
-                  error={!!errors.country}
-                  helperText={errors.country}
-                  autoComplete="country-name"
-                />
-              )}
-            />
-          </Box>
-        </Box>
+        <BasicInformation
+          personalDetails={personalDetails}
+          errors={errors}
+          handleChange={handleChange}
+          updatePersonalDetails={updatePersonalDetails}
+          setErrors={setErrors}
+        />
+        <ContactDetails
+          personalDetails={personalDetails}
+          errors={errors}
+          handleChange={handleChange}
+        />
+        <Address
+          personalDetails={personalDetails}
+          errors={errors}
+          handleChange={handleChange}
+          handleAutocompleteChange={handleAutocompleteChange}
+          handleAutocompleteInputChange={handleAutocompleteInputChange}
+          states={states}
+          countries={countries}
+        />
       </Box>
 
       <BottomBar>

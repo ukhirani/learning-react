@@ -1,4 +1,4 @@
-import { Autocomplete, Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { useFormContext } from "../../context/FormContext";
 import { industries, jobTitles, skillsList } from "../../constants/options";
 import { sanitizeDecimal } from "../../utils/formUtils";
@@ -7,6 +7,9 @@ import BackwardButton from "../buttons/backwardButton/BackwardButton.jsx";
 import BottomBar from "../bottomBar/BottomBar.jsx";
 import FormStep from "../formStep/FormStep.jsx";
 import formStyles from "../formStep/formStep.module.css";
+import CurrentEmployment from "./Step3/CurrentEmployment.jsx";
+import SkillsExperience from "./Step3/SkillsExperience.jsx";
+import OnlinePresence from "./Step3/OnlinePresence.jsx";
 
 const Step3 = () => {
   const {
@@ -109,137 +112,27 @@ const Step3 = () => {
   return (
     <FormStep title="Professional Background *">
       <Box component="form" className={formStyles.form}>
-        <Box className={formStyles.section}>
-          <p className={formStyles.sectionTitle}>Current Employment</p>
-          <Box className={formStyles.gridTwo}>
-            <Autocomplete
-              // freeSolo
-              options={jobTitles}
-              value={professionalBackground.currentJobTitle}
-              onChange={handleAutocompleteChange("currentJobTitle")}
-              onInputChange={(e, value) =>
-                updateProfessionalBackground({ currentJobTitle: value })
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Current Job Title *"
-                  variant="outlined"
-                  error={!!errors.currentJobTitle}
-                  helperText={errors.currentJobTitle}
-                />
-              )}
-            />
-            <TextField
-              label="Company *"
-              variant="outlined"
-              name="company"
-              value={professionalBackground.company}
-              onChange={handleChange}
-              error={!!errors.company}
-              helperText={errors.company}
-              fullWidth
-              autoComplete="off"
-            />
-          </Box>
-
-          <Box className={formStyles.gridTwo}>
-            <Autocomplete
-              // freeSolo
-              options={industries}
-              value={professionalBackground.industry}
-              onChange={handleAutocompleteChange("industry")}
-              onInputChange={(e, value) =>
-                updateProfessionalBackground({ industry: value })
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Industry *"
-                  variant="outlined"
-                  error={!!errors.industry}
-                  helperText={errors.industry}
-                />
-              )}
-            />
-            <TextField
-              label="Years of Experience *"
-              variant="outlined"
-              name="yearsOfExperience"
-              type="number"
-              value={professionalBackground.yearsOfExperience}
-              onChange={handleChange}
-              error={!!errors.yearsOfExperience}
-              helperText={errors.yearsOfExperience}
-              fullWidth
-              inputProps={{ min: 0, max: 60, step: 0.5, inputMode: "decimal" }}
-            />
-          </Box>
-        </Box>
-
-        <Box className={formStyles.section}>
-          <p className={formStyles.sectionTitle}>Skills & Experience</p>
-          <Autocomplete
-            // freeSolo
-            multiple
-            filterSelectedOptions
-            options={skillsList}
-            value={professionalBackground.skills}
-            onChange={handleAutocompleteChange("skills")}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Key Skills *"
-                variant="outlined"
-                error={!!errors.skills}
-                helperText={errors.skills || "Press Enter to add a skill"}
-                placeholder="React, Node.js, Python, SQL..."
-              />
-            )}
-          />
-
-          <TextField
-            label="Job Description / Responsibilities *"
-            variant="outlined"
-            name="jobDescription"
-            value={professionalBackground.jobDescription}
-            onChange={handleChange}
-            fullWidth
-            multiline
-            rows={4}
-            placeholder="Describe your current role, key responsibilities, and achievements..."
-          />
-        </Box>
-
-        <Box className={formStyles.section}>
-          <p className={formStyles.sectionTitle}>Online Presence (Optional)</p>
-          <Box className={formStyles.gridTwo}>
-            <TextField
-              label="LinkedIn URL"
-              variant="outlined"
-              name="linkedinUrl"
-              value={professionalBackground.linkedinUrl}
-              onChange={handleChange}
-              error={!!errors.linkedinUrl}
-              helperText={errors.linkedinUrl}
-              fullWidth
-              placeholder="https://linkedin.com/in/yourprofile"
-              autoComplete="url"
-            />
-            <TextField
-              label="Portfolio / Website URL"
-              variant="outlined"
-              name="portfolioUrl"
-              value={professionalBackground.portfolioUrl}
-              onChange={handleChange}
-              error={!!errors.portfolioUrl}
-              helperText={errors.portfolioUrl}
-              fullWidth
-              placeholder="https://yourportfolio.com"
-              autoComplete="url"
-            />
-          </Box>
-        </Box>
+        <CurrentEmployment
+          professionalBackground={professionalBackground}
+          errors={errors}
+          handleAutocompleteChange={handleAutocompleteChange}
+          updateProfessionalBackground={updateProfessionalBackground}
+          handleChange={handleChange}
+          jobTitles={jobTitles}
+          industries={industries}
+        />
+        <SkillsExperience
+          professionalBackground={professionalBackground}
+          errors={errors}
+          handleAutocompleteChange={handleAutocompleteChange}
+          handleChange={handleChange}
+          skillsList={skillsList}
+        />
+        <OnlinePresence
+          professionalBackground={professionalBackground}
+          errors={errors}
+          handleChange={handleChange}
+        />
       </Box>
 
       <BottomBar>
