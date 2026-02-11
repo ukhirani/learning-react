@@ -3,12 +3,7 @@
 :root {
   color: #1f2937;
   background-color: #f6f7fb;
-  font-family:
-    "Inter",
-    "Segoe UI",
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-family: "Inter", "Segoe UI", sans-serif;
 }
 
 body {
@@ -17,12 +12,10 @@ body {
 }
 
 #root {
-  width: 100vw;
   min-height: 100vh;
   text-align: left;
   justify-content: center;
   align-items: center;
   display: flex;
-  padding: 1.5rem 1rem;
   box-sizing: border-box;
 }
