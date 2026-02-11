@@ -1,28 +1,50 @@
-import { Box, Modal, Typography, Divider, Button, Chip } from "@mui/material";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { Box, Modal, Typography, Divider, Button } from "@mui/material";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import RestartAltOutlinedIcon from "@mui/icons-material/RestartAltOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useFormContext } from "../../context/FormContext";
 import styles from "./successModal.module.css";
 
 const SuccessModal = () => {
-  const { isModalOpen, setIsModalOpen, formData, clearFormData } =
-    useFormContext();
+  const {
+    isModalOpen,
+    setIsModalOpen,
+    formData,
+    applications,
+    selectedApplicationId,
+    removeApplication,
+    startEditingApplication,
+  } = useFormContext();
 
-  const { personalDetails, academicBackground, professionalBackground } =
-    formData;
+  const selectedApplication = applications.find(
+    (entry) => entry.id === selectedApplicationId,
+  );
+
+  const activeData = selectedApplication?.data || formData;
+  const personalDetails = activeData?.personalDetails || {};
+  const academicBackground = activeData?.academicBackground || {};
+  const professionalBackground = activeData?.professionalBackground || {};
 
   const handleClose = () => {
     setIsModalOpen(false);
   };
 
-  const handleStartOver = () => {
+  const handleEdit = () => {
+    if (!selectedApplicationId) return;
+    startEditingApplication(selectedApplicationId);
     setIsModalOpen(false);
-    clearFormData();
+  };
+
+  const handleRemove = () => {
+    if (!selectedApplicationId) return;
+    if (confirm("Remove this application permanently?")) {
+      removeApplication(selectedApplicationId);
+      setIsModalOpen(false);
+    }
   };
 
   const handlePrint = () => {
@@ -57,7 +79,9 @@ const SuccessModal = () => {
             <Box className={styles.fieldsGrid}>
               {renderField(
                 "Full Name",
-                `${personalDetails.firstName} ${personalDetails.lastName}`,
+                [personalDetails.firstName, personalDetails.lastName]
+                  .filter(Boolean)
+                  .join(" "),
               )}
               {renderField("Email", personalDetails.email)}
               {renderField("Phone", personalDetails.phone)}
@@ -65,7 +89,15 @@ const SuccessModal = () => {
               {renderField("Gender", personalDetails.gender)}
               {renderField(
                 "Address",
-                `${personalDetails.address}, ${personalDetails.city}, ${personalDetails.state} ${personalDetails.zipCode}, ${personalDetails.country}`,
+                [
+                  personalDetails.address,
+                  personalDetails.city,
+                  personalDetails.state,
+                  personalDetails.zipCode,
+                  personalDetails.country,
+                ]
+                  .filter(Boolean)
+                  .join(", "),
               )}
             </Box>
           </Box>
@@ -118,11 +150,21 @@ const SuccessModal = () => {
         <Box className={styles.actions}>
           <Button
             variant="outlined"
-            onClick={handleClose}
-            className={styles.closeButton}
-            startIcon={<CloseOutlinedIcon />}
+            onClick={handleEdit}
+            className={styles.editButton}
+            startIcon={<EditOutlinedIcon />}
+            disabled={!selectedApplicationId}
           >
-            Close
+            Edit
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={handleRemove}
+            className={styles.removeButton}
+            startIcon={<DeleteOutlineOutlinedIcon />}
+            disabled={!selectedApplicationId}
+          >
+            Remove
           </Button>
           <Button
             variant="outlined"
@@ -130,15 +172,15 @@ const SuccessModal = () => {
             className={styles.printButton}
             startIcon={<PrintOutlinedIcon />}
           >
-            Print Resume
+            Print
           </Button>
           <Button
-            variant="contained"
-            onClick={handleStartOver}
-            className={styles.startOverButton}
-            startIcon={<RestartAltOutlinedIcon />}
+            variant="outlined"
+            onClick={handleClose}
+            className={styles.closeButton}
+            startIcon={<CloseOutlinedIcon />}
           >
-            Start Over
+            Close
           </Button>
         </Box>
       </Box>

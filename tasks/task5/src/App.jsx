@@ -5,17 +5,21 @@ import { Box } from "@mui/material";
 import FormContextProvider from "./context/FormContext.jsx";
 import StepperComponent from "./components/stepper/StepperComponent.jsx";
 import SuccessModal from "./components/successModal/SuccessModal.jsx";
+import ApplicationsList from "./components/applicationsList/ApplicationsList.jsx";
 
 function App() {
   return (
     <>
-      <Box className={styles.container}>
-        <FormContextProvider>
-          <StepperComponent />
-          <CustomRouter />
-          <SuccessModal />
-        </FormContextProvider>
-      </Box>
+      <FormContextProvider>
+        <Box className={styles.layout}>
+          <Box className={styles.container}>
+            <StepperComponent />
+            <CustomRouter />
+          </Box>
+          <ApplicationsList />
+        </Box>
+        <SuccessModal />
+      </FormContextProvider>
     </>
   );
 }

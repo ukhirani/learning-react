@@ -91,6 +91,7 @@
   padding: 1rem 2rem;
   border-top: 1px solid #edf0f7;
   background-color: #fafbfc;
+  flex-wrap: wrap;
 }
 
 .closeButton {
@@ -99,9 +100,16 @@
   color: #344054 !important;
 }
 
-.startOverButton {
+.editButton {
   text-transform: none !important;
-  background-color: #1976d2 !important;
+  border-color: #d0d5dd !important;
+  color: #1f2a44 !important;
+}
+
+.removeButton {
+  text-transform: none !important;
+  border-color: #f5c2c7 !important;
+  color: #b42318 !important;
 }
 
 .printButton {
@@ -130,7 +138,9 @@
   }
 
   .closeButton,
-  .startOverButton {
+  .editButton,
+  .removeButton,
+  .printButton {
     width: 100%;
   }
 }

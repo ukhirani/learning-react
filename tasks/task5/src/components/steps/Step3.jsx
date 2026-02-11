@@ -20,6 +20,7 @@ const Step3 = () => {
     setErrors,
     setIsModalOpen,
     clearFormData,
+    saveApplication,
   } = useFormContext();
   const professionalBackground = formData.professionalBackground;
 
@@ -100,6 +101,7 @@ const Step3 = () => {
   const handleSubmit = () => {
     if (!validateProfessionalBackground()) return;
     if (confirm("Are you sure you want to submit the form ?")) {
+      saveApplication(formData);
       clearFormData();
     }
   };

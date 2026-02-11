@@ -31,7 +31,7 @@ const SkillsExperience = ({
       />
 
       <TextField
-        label="Job Description / Responsibilities *"
+        label="Job Description / Responsibilities (Optional)"
         variant="outlined"
         name="jobDescription"
         value={professionalBackground.jobDescription}
