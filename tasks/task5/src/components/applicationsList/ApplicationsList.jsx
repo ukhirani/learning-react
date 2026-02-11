@@ -1,14 +1,67 @@
-import { Box, Typography } from "@mui/material";
+import { Box, MenuItem, TextField, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
 import { useFormContext } from "../../context/FormContext";
 import styles from "./applicationsList.module.css";
 
 const ApplicationsList = () => {
   const { applications, selectApplication, setIsModalOpen } = useFormContext();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("sno-asc");
 
   const handleRowClick = (id) => {
     selectApplication(id);
     setIsModalOpen(true);
   };
+
+  const filteredApplications = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    let list = applications.map((entry, index) => ({
+      ...entry,
+      index,
+    }));
+
+    if (query) {
+      list = list.filter((entry) => {
+        const personal = entry.data?.personalDetails || {};
+        const fullName = [personal.firstName, personal.lastName]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        return fullName.includes(query);
+      });
+    }
+
+    const getFullName = (entry) => {
+      const personal = entry.data?.personalDetails || {};
+      return [personal.firstName, personal.lastName]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+    };
+
+    const getSubmittedAt = (entry) =>
+      entry.submittedAt ? new Date(entry.submittedAt).getTime() : 0;
+
+    const sorted = [...list].sort((a, b) => {
+      switch (sortBy) {
+        case "sno-desc":
+          return b.index - a.index;
+        case "name-asc":
+          return getFullName(a).localeCompare(getFullName(b));
+        case "name-desc":
+          return getFullName(b).localeCompare(getFullName(a));
+        case "date-asc":
+          return getSubmittedAt(a) - getSubmittedAt(b);
+        case "date-desc":
+          return getSubmittedAt(b) - getSubmittedAt(a);
+        case "sno-asc":
+        default:
+          return a.index - b.index;
+      }
+    });
+
+    return sorted;
+  }, [applications, searchTerm, sortBy]);
 
   return (
     <Box className={styles.card}>
@@ -17,10 +70,35 @@ const ApplicationsList = () => {
         <Typography className={styles.subtitle}>Submitted records</Typography>
       </Box>
 
+      <Box className={styles.controls}>
+        <TextField
+          size="small"
+          placeholder="Search by name"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+          className={styles.searchInput}
+        />
+        <TextField
+          select
+          size="small"
+          label="Sort by"
+          value={sortBy}
+          onChange={(event) => setSortBy(event.target.value)}
+          className={styles.sortSelect}
+        >
+          <MenuItem value="sno-asc">S.No: Low to High</MenuItem>
+          <MenuItem value="sno-desc">S.No: High to Low</MenuItem>
+          <MenuItem value="name-asc">Full Name: A to Z</MenuItem>
+          <MenuItem value="name-desc">Full Name: Z to A</MenuItem>
+          <MenuItem value="date-asc">Submitted On: Oldest</MenuItem>
+          <MenuItem value="date-desc">Submitted On: Newest</MenuItem>
+        </TextField>
+      </Box>
+
       <Box className={styles.tableWrapper}>
-        {applications.length === 0 ? (
+        {filteredApplications.length === 0 ? (
           <Typography className={styles.emptyText}>
-            No submissions yet.
+            No submissions found.
           </Typography>
         ) : (
           <table className={styles.table}>
@@ -32,13 +110,13 @@ const ApplicationsList = () => {
               </tr>
             </thead>
             <tbody>
-              {applications.map((entry, index) => {
+              {filteredApplications.map((entry, index) => {
                 const personal = entry.data?.personalDetails || {};
                 const fullName = [personal.firstName, personal.lastName]
                   .filter(Boolean)
                   .join(" ");
                 const submittedAt = entry.submittedAt
-                  ? new Date(entry.submittedAt).toLocaleDateString()
+                  ? new Date(entry.submittedAt).toLocaleDateString("en-GB")
                   : "-";
                 return (
                   <tr
