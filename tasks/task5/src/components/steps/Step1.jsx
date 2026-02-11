@@ -106,6 +106,14 @@ const Step1 = () => {
 
     if (!personalDetails.dateOfBirth) {
       newErrors.dateOfBirth = "Date of birth is required";
+    } else {
+      const dobCheck = new dayjs(nextValue);
+      if (new dayjs() < dobCheck) {
+        setErrors((prev) => ({
+          ...prev,
+          dateOfBirth: "DOB cannot be in future",
+        }));
+      }
     }
 
     if (!personalDetails.gender) {
@@ -188,7 +196,9 @@ const Step1 = () => {
                 const nextValue = value?.isValid()
                   ? value.format("YYYY-MM-DD")
                   : "";
+
                 updatePersonalDetails({ dateOfBirth: nextValue });
+
                 if (errors.dateOfBirth) {
                   setErrors((prev) => ({ ...prev, dateOfBirth: "" }));
                 }
@@ -301,7 +311,7 @@ const Step1 = () => {
                   variant="outlined"
                   error={!!errors.state}
                   helperText={errors.state}
-                  autoComplete="address-level1"
+                  autoComplete="off"
                 />
               )}
             />
