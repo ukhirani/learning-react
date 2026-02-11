@@ -1,4 +1,5 @@
 import { Box, Modal, Typography, Divider, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
@@ -7,6 +8,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useFormContext } from "../../context/FormContext";
+import { useConfirm } from "../confirmDialog/ConfirmDialog";
 import styles from "./successModal.module.css";
 
 const SuccessModal = () => {
@@ -18,7 +20,9 @@ const SuccessModal = () => {
     selectedApplicationId,
     removeApplication,
     startEditingApplication,
+    clearFormData,
   } = useFormContext();
+  const navigate = useNavigate();
 
   const selectedApplication = applications.find(
     (entry) => entry.id === selectedApplicationId,
@@ -37,12 +41,17 @@ const SuccessModal = () => {
     if (!selectedApplicationId) return;
     startEditingApplication(selectedApplicationId);
     setIsModalOpen(false);
+    navigate("/");
   };
 
-  const handleRemove = () => {
+  const confirm = useConfirm();
+
+  const handleRemove = async () => {
     if (!selectedApplicationId) return;
-    if (confirm("Remove this application permanently?")) {
+    const ok = await confirm("Remove this application permanently?");
+    if (ok) {
       removeApplication(selectedApplicationId);
+      clearFormData();
       setIsModalOpen(false);
     }
   };

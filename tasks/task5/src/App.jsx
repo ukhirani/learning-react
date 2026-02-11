@@ -1,26 +1,25 @@
 import "./App.css";
-import CustomRouter from "./components/CustomRouter.jsx";
-import styles from "./app.module.css";
-import { Box } from "@mui/material";
+import { Routes, Route } from "react-router-dom";
 import FormContextProvider from "./context/FormContext.jsx";
-import StepperComponent from "./components/stepper/StepperComponent.jsx";
+import ConfirmDialogProvider from "./components/confirmDialog/ConfirmDialog.jsx";
+import Layout from "./components/layout/Layout.jsx";
+import HomePage from "./components/pages/home/HomePage.jsx";
+import ApplicationsPage from "./components/pages/applications/ApplicationsPage.jsx";
 import SuccessModal from "./components/successModal/SuccessModal.jsx";
-import ApplicationsList from "./components/applicationsList/ApplicationsList.jsx";
 
 function App() {
   return (
-    <>
-      <FormContextProvider>
-        <Box className={styles.layout}>
-          <Box className={styles.container}>
-            <StepperComponent />
-            <CustomRouter />
-          </Box>
-          <ApplicationsList />
-        </Box>
+    <FormContextProvider>
+      <ConfirmDialogProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/applications" element={<ApplicationsPage />} />
+          </Route>
+        </Routes>
         <SuccessModal />
-      </FormContextProvider>
-    </>
+      </ConfirmDialogProvider>
+    </FormContextProvider>
   );
 }
 

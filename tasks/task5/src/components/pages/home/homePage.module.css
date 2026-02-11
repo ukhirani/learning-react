@@ -1,13 +1,6 @@
-.layout {
-  width: 100%;
-  max-width: 1400px;
-  display: flex;
-  gap: 1.5rem;
-  align-items: stretch;
-}
-
 .container {
   width: 100%;
+  max-width: 1200px;
   background-color: #ffffff;
   border-radius: 20px;
   border: 1px solid #e5e7eb;
@@ -16,14 +9,9 @@
   gap: 1rem;
   padding: 1.75rem;
   box-sizing: border-box;
-  flex: 1;
 }
 
-@media (max-width: 1000px) {
-  .layout {
-    flex-direction: column;
-  }
-
+@media (max-width: 899px) {
   .container {
     padding: 1.25rem 1rem 1.5rem;
   }

@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useFormContext } from "../../context/FormContext";
 import styles from "./applicationsList.module.css";
 
-const ApplicationsList = () => {
+export default function ApplicationsList() {
   const { applications, selectApplication, setIsModalOpen } = useFormContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("sno-asc");
@@ -42,6 +42,9 @@ const ApplicationsList = () => {
     const getSubmittedAt = (entry) =>
       entry.submittedAt ? new Date(entry.submittedAt).getTime() : 0;
 
+    const getUpdatedAt = (entry) =>
+      entry.updatedAt ? new Date(entry.updatedAt).getTime() : 0;
+
     const sorted = [...list].sort((a, b) => {
       switch (sortBy) {
         case "sno-desc":
@@ -54,6 +57,10 @@ const ApplicationsList = () => {
           return getSubmittedAt(a) - getSubmittedAt(b);
         case "date-desc":
           return getSubmittedAt(b) - getSubmittedAt(a);
+        case "updated-asc":
+          return getUpdatedAt(a) - getUpdatedAt(b);
+        case "updated-desc":
+          return getUpdatedAt(b) - getUpdatedAt(a);
         case "sno-asc":
         default:
           return a.index - b.index;
@@ -65,11 +72,6 @@ const ApplicationsList = () => {
 
   return (
     <Box className={styles.card}>
-      <Box className={styles.header}>
-        <Typography className={styles.title}>Applications</Typography>
-        <Typography className={styles.subtitle}>Submitted records</Typography>
-      </Box>
-
       <Box className={styles.controls}>
         <TextField
           size="small"
@@ -92,6 +94,8 @@ const ApplicationsList = () => {
           <MenuItem value="name-desc">Full Name: Z to A</MenuItem>
           <MenuItem value="date-asc">Submitted On: Oldest</MenuItem>
           <MenuItem value="date-desc">Submitted On: Newest</MenuItem>
+          <MenuItem value="updated-asc">Updated On: Oldest</MenuItem>
+          <MenuItem value="updated-desc">Updated On: Newest</MenuItem>
         </TextField>
       </Box>
 
@@ -106,7 +110,9 @@ const ApplicationsList = () => {
               <tr>
                 <th className={styles.th}>S.No</th>
                 <th className={styles.th}>Full Name</th>
+                <th className={styles.th}>Email</th>
                 <th className={styles.th}>Submitted On</th>
+                <th className={styles.th}>Updated On</th>
               </tr>
             </thead>
             <tbody>
@@ -115,8 +121,12 @@ const ApplicationsList = () => {
                 const fullName = [personal.firstName, personal.lastName]
                   .filter(Boolean)
                   .join(" ");
+                const email = personal.email || "-";
                 const submittedAt = entry.submittedAt
                   ? new Date(entry.submittedAt).toLocaleDateString("en-GB")
+                  : "-";
+                const updatedAt = entry.updatedAt
+                  ? new Date(entry.updatedAt).toLocaleDateString("en-GB")
                   : "-";
                 return (
                   <tr
@@ -126,7 +136,9 @@ const ApplicationsList = () => {
                   >
                     <td className={styles.td}>{index + 1}</td>
                     <td className={styles.td}>{fullName}</td>
+                    <td className={styles.td}>{email}</td>
                     <td className={styles.td}>{submittedAt}</td>
+                    <td className={styles.td}>{updatedAt}</td>
                   </tr>
                 );
               })}
@@ -136,6 +148,4 @@ const ApplicationsList = () => {
       </Box>
     </Box>
   );
-};
-
-export default ApplicationsList;
+}

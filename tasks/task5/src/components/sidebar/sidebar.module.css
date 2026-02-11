@@ -1,0 +1,95 @@
+.permanentSidebar {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+}
+
+.drawerInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid #edf0f7;
+}
+
+.brandText {
+  font-weight: 700 !important;
+  font-size: 1.15rem !important;
+  color: #1f2a44;
+  letter-spacing: -0.25px;
+}
+
+.closeBtn {
+  color: #6b7280 !important;
+}
+
+.navList {
+  padding: 0.75rem 0.75rem !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.navButton {
+  border-radius: 10px !important;
+  padding: 0.55rem 1rem !important;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease !important;
+}
+
+.navButton:hover {
+  background-color: #f5f7fb !important;
+}
+
+.navButtonActive {
+  background-color: #eef2ff !important;
+}
+
+.navButtonActive .navIcon,
+.navButtonActive .navLabel {
+  font-weight: 600 !important;
+}
+
+.navIcon {
+  min-width: 36px !important;
+}
+
+.navLabel {
+  font-size: 0.9rem !important;
+}
+
+.topBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.menuBtn {
+  color: #374151 !important;
+}
+
+.topBarTitle {
+  font-weight: 700 !important;
+  font-size: 1.05rem !important;
+  color: #1f2a44;
+}

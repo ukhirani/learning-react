@@ -59,7 +59,6 @@ const BasicInformation = ({
             const nextValue = value?.isValid()
               ? value.format("YYYY-MM-DD")
               : "";
-
             updatePersonalDetails({ dateOfBirth: nextValue });
 
             if (errors.dateOfBirth) {
