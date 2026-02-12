@@ -18,8 +18,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import styles from "./sidebar.module.css";
 
-const SIDEBAR_WIDTH = 240;
-
 const navItems = [
   { label: "Home", path: "/", icon: <HomeOutlinedIcon /> },
   {
@@ -83,11 +81,7 @@ const Sidebar = () => {
 
   if (isDesktop) {
     return (
-      <Box
-        component="nav"
-        className={styles.permanentSidebar}
-        sx={{ width: SIDEBAR_WIDTH, flexShrink: 0 }}
-      >
+      <Box component="nav" className={styles.permanentSidebar}>
         {drawerContent}
       </Box>
     );
@@ -111,13 +105,7 @@ const Sidebar = () => {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         ModalProps={{ keepMounted: true }}
-        sx={{
-          "& .MuiDrawer-paper": {
-            width: SIDEBAR_WIDTH,
-            boxSizing: "border-box",
-            border: "none",
-          },
-        }}
+        PaperProps={{ className: styles.drawerPaper }}
       >
         {drawerContent}
       </Drawer>

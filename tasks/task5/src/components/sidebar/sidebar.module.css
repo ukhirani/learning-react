@@ -4,8 +4,16 @@
   top: 0;
   left: 0;
   z-index: 100;
+  width: 240px;
+  flex-shrink: 0;
   background-color: #ffffff;
   border-right: 1px solid #e5e7eb;
+}
+
+.drawerPaper {
+  width: 240px !important;
+  box-sizing: border-box !important;
+  border: none !important;
 }
 
 .drawerInner {
@@ -42,11 +50,7 @@
 }
 
 .navButton {
-  border-radius: 10px !important;
-  padding: 0.55rem 1rem !important;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease !important;
+  border-radius: 5px !important;
 }
 
 .navButton:hover {
@@ -92,4 +96,11 @@
   font-weight: 700 !important;
   font-size: 1.05rem !important;
   color: #1f2a44;
+}
+
+@media print {
+  .permanentSidebar,
+  .topBar {
+    display: none !important;
+  }
 }
