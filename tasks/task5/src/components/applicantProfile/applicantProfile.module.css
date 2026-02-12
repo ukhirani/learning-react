@@ -1,0 +1,11 @@
+.pageWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem 3rem;
+}
+
+.pageContainer {
+  position: static !important;
+  transform: none !important;
+  margin: 0 auto;
+}
