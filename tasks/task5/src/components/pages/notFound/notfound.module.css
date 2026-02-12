@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  margin-top: 0;
+}
+.message {
+  font-size: 1.5rem;
+  color: #1f2a44;
+}
