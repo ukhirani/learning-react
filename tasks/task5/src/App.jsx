@@ -6,6 +6,8 @@ import HomePage from "./components/pages/home/HomePage.jsx";
 import ApplicationsPage from "./components/pages/applications/ApplicationsPage.jsx";
 import SuccessModal from "./components/successModal/SuccessModal.jsx";
 import ConfirmDialog from "./components/confirmDialog/ConfirmDialog.jsx";
+import NotFoundPage from "./components/pages/notFound/NotFoundPage.jsx";
+import ApplicantProfile from "./components/applicantProfile/ApplicantProfile.jsx";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/applications" element={<ApplicationsPage />} />
+          <Route path="/applications/:applicationID" element={<ApplicantProfile />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
       <SuccessModal />
