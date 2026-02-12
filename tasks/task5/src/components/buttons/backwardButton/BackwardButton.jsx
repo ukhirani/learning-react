@@ -17,7 +17,7 @@ const BackwardButton = ({
       onClick={onClick}
       startIcon={icon}
       sx={{
-        visibility: editingApplicationId ? "hidden" : "visible", // Or use display: none
+        visibility: editingApplicationId ? "hidden" : "visible",
       }}
     >
       {children}
