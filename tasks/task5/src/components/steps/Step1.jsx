@@ -19,6 +19,7 @@ import BasicInformation from "./Step1/BasicInformation.jsx";
 import ContactDetails from "./Step1/ContactDetails.jsx";
 import Address from "./Step1/Address.jsx";
 import formStyles from "../formStep/formStep.module.css";
+import { useEffect } from "react";
 
 const Step1 = () => {
   const {
@@ -30,6 +31,10 @@ const Step1 = () => {
     setErrors,
     editingApplicationId,
   } = useFormContext();
+
+  useEffect(() => {
+    setErrors({});
+  }, [editingApplicationId]);
 
   const personalDetails = formData.personalDetails;
 
