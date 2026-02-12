@@ -2,15 +2,16 @@ import { Box, MenuItem, TextField, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useFormContext } from "../../context/FormContext";
 import styles from "./applicationsList.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ApplicationsList() {
-  const { applications, selectApplication, setIsModalOpen } = useFormContext();
+  const { applications } = useFormContext();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("sno-asc");
 
   const handleRowClick = (id) => {
-    selectApplication(id);
-    setIsModalOpen(true);
+    navigate(`/applications/${id}`);
   };
 
   const filteredApplications = useMemo(() => {
@@ -122,19 +123,47 @@ export default function ApplicationsList() {
                   .filter(Boolean)
                   .join(" ");
                 const email = personal.email || "-";
-                const submittedAt = entry.submittedAt
+                let submittedAt = entry.submittedAt
                   ? new Date(entry.submittedAt).toLocaleDateString("en-GB")
                   : "-";
-                const updatedAt = entry.updatedAt
+                if (
+                  new Date(entry.submittedAt).toDateString() ===
+                  new Date().toDateString()
+                ) {
+                  submittedAt =
+                    new Date(entry.submittedAt).toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    }) + " (Today)";
+                }
+
+                let updatedAt = entry.updatedAt
                   ? new Date(entry.updatedAt).toLocaleDateString("en-GB")
                   : "-";
+                if (
+                  new Date(entry.updatedAt).toDateString() ===
+                  new Date().toDateString()
+                ) {
+                  updatedAt =
+                    new Date(entry.updatedAt).toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    }) + " (Today)";
+                }
+
                 return (
                   <tr
                     key={entry.id}
                     className={styles.row}
                     onClick={() => handleRowClick(entry.id)}
                   >
-                    <td className={styles.td}>{index + 1}</td>
+                    <td className={styles.td}>
+                      {sortBy === "sno-desc"
+                        ? filteredApplications.length - index
+                        : index + 1}
+                    </td>
                     <td className={styles.td}>{fullName}</td>
                     <td className={styles.td}>{email}</td>
                     <td className={styles.td}>{submittedAt}</td>
