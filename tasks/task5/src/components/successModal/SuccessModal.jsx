@@ -41,7 +41,7 @@ const SuccessModal = () => {
     if (!selectedApplicationId) return;
     startEditingApplication(selectedApplicationId);
     setIsModalOpen(false);
-    navigate("/");
+    navigate("/form");
   };
 
   const handleRemove = () => {

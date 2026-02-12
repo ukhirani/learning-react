@@ -12,19 +12,13 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import styles from "./sidebar.module.css";
 
 const navItems = [
-  { label: "Home", path: "/", icon: <HomeOutlinedIcon /> },
-  {
-    label: "Applications",
-    path: "/applications",
-    icon: <ListAltOutlinedIcon />,
-  },
+  { label: "Applications", path: "/", icon: <ListAltOutlinedIcon /> },
 ];
 
 const Sidebar = () => {

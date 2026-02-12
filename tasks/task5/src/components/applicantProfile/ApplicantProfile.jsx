@@ -36,13 +36,13 @@ const ApplicantProfile = () => {
 
   const handleEdit = () => {
     startEditingApplication(applicationID);
-    navigate("/");
+    navigate("/form");
   };
 
   const handleDelete = () => {
     openConfirm("Remove this application permanently?", (ok) => {
       if (ok) {
-        navigate("/applications");
+        navigate("/");
         removeApplication(applicationID);
         clearFormData();
       }
@@ -50,13 +50,11 @@ const ApplicantProfile = () => {
   };
 
   const handlePrint = () => {
-
     window.print();
-
   };
 
   const handleClose = () => {
-    navigate("/applications");
+    navigate("/");
   };
 
   const renderField = (label, value) => {

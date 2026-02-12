@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import FormContextProvider from "./context/FormContext.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import HomePage from "./components/pages/home/HomePage.jsx";
@@ -14,9 +14,12 @@ function App() {
     <FormContextProvider>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/applications" element={<ApplicationsPage />} />
-          <Route path="/applications/:applicationID" element={<ApplicantProfile />} />
+          <Route path="/" element={<ApplicationsPage />} />
+          <Route path="/form" element={<HomePage />} />
+          <Route
+            path="/applications/:applicationID"
+            element={<ApplicantProfile />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

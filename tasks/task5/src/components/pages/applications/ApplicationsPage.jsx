@@ -11,7 +11,7 @@ const ApplicationsPage = () => {
 
   const handleNewApplication = () => {
     clearFormData();
-    navigate("/");
+    navigate("/form");
   };
 
   return (

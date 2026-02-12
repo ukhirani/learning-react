@@ -28,7 +28,9 @@ const Step1 = () => {
     updatePersonalDetails,
     errors,
     setErrors,
+    editingApplicationId,
   } = useFormContext();
+
   const personalDetails = formData.personalDetails;
 
   const handleChange = (event) => {
@@ -170,11 +172,11 @@ const Step1 = () => {
           countries={countries}
         />
       </Box>
-
       <BottomBar>
         <BackwardButton
           color={"error"}
           icon={<RestartAltOutlined />}
+          editingApplicationId={editingApplicationId}
           onClick={clearFormData}
         >
           Reset
@@ -184,5 +186,4 @@ const Step1 = () => {
     </FormStep>
   );
 };
-
 export default Step1;

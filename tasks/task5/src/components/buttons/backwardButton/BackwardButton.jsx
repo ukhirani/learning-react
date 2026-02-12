@@ -7,6 +7,7 @@ const BackwardButton = ({
   children,
   onClick,
   icon = <ArrowBackIcon />,
+  editingApplicationId,
 }) => {
   return (
     <Button
@@ -15,6 +16,9 @@ const BackwardButton = ({
       color={color}
       onClick={onClick}
       startIcon={icon}
+      sx={{
+        visibility: editingApplicationId ? "hidden" : "visible", // Or use display: none
+      }}
     >
       {children}
     </Button>
