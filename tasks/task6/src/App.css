@@ -1,0 +1,8 @@
+#root {
+  height: 100vh;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+}
