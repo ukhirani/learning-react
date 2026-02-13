@@ -8,18 +8,6 @@ import FilterBar from "./FilterBar";
 
 const columns = [
   {
-    field: "avatar",
-    headerName: "Profile",
-    sortable: false,
-    headerAlign: "center",
-    align: "center",
-    renderCell: (params) => (
-      <Box className={styles.avatarCell}>
-        <Avatar src={params.value} />
-      </Box>
-    ),
-  },
-  {
     field: "id",
     headerName: "ID",
     width: 100,
@@ -80,13 +68,13 @@ export default function TableComponent() {
       .then((data) => {
         setRows(data);
         setLoading(false);
-        setRoleOptions([...new Set(data.map(row => row.role))]);
+        setRoleOptions(["admin", "customer"]);
       })
       .catch(() => setLoading(false));
   }, []);
 
   // Filter logic
-  const filteredRows = rows.filter(row => {
+  const filteredRows = rows.filter((row) => {
     const nameMatch = row.name.toLowerCase().includes(name.toLowerCase());
     const roleMatch = roles.length === 0 || roles.includes(row.role);
     return nameMatch && roleMatch;

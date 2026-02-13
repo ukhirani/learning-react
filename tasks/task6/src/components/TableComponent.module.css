@@ -3,7 +3,7 @@
   max-width: 1400px;
   height: 80vh;
   border-radius: 16px;
-  box-shadow: none;
+  box-shadow: none !important;
   padding: 24px;
   overflow: hidden;
   display: flex;
@@ -57,6 +57,14 @@
   color: #000000 !important;
   text-align: center;
   width: 100%;
+}
+
+.dataGrid :global(.MuiDataGrid-columnHeader[data-field="id"]),
+.dataGrid :global(.MuiDataGrid-cell[data-field="id"]) {
+  position: sticky;
+  left: 0px;
+  z-index: 100;
+  /* background: #222831; */
 }
 
 .dataGrid :global(.MuiDataGrid-scrollbarFiller) {

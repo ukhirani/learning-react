@@ -8,6 +8,7 @@
 
 .textField {
   flex: 1;
+  padding: 0px !important;
 }
 
 .autocomplete {
@@ -22,11 +23,11 @@
 
 /* Makeover colors */
 .textField input {
-  background: #f5f5f5;
+  /* background: #f5f5f5; */
   color: #222;
 }
 
 .autocomplete input {
-  background: #f5f5f5;
+  /* background: #f5f5f5; */
   color: #222;
 }
