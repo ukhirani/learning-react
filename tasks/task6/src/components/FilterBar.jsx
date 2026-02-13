@@ -26,16 +26,19 @@ export default function FilterBar({
         options={roleOptions}
         value={roles}
         onChange={(e, newValue) => setRoles(newValue)}
-        freeSolo
         renderTags={(value, getTagProps) =>
-          value.map((option, index) => (
-            <Chip
-              variant="filled"
-              label={option}
-              {...getTagProps({ index })}
-              className={styles.chip}
-            />
-          ))
+          value.map((option, index) => {
+            const { key, ...tagProps } = getTagProps({ index });
+            return (
+              <Chip
+                key={key}
+                variant="filled"
+                label={option}
+                {...tagProps}
+                className={styles.chip}
+              />
+            );
+          })
         }
         renderInput={(params) => (
           <TextField
@@ -43,7 +46,6 @@ export default function FilterBar({
             variant="outlined"
             label="Filter by Role(s)"
             placeholder="Type and press Enter"
-            className={styles.autocomplete}
           />
         )}
         className={styles.autocomplete}
