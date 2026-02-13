@@ -1,12 +1,9 @@
 import "./App.css";
 import { Box } from "@mui/material";
+import TableComponent from "./components/TableComponent.jsx";
 
 function App() {
-  return (
-    <>
-      <Box className="">Boilerplate</Box>
-    </>
-  );
+  return <TableComponent />;
 }
 
 export default App;

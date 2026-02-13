@@ -1,0 +1,54 @@
+.tableContainer {
+  width: 80%;
+  height: 80vh;
+}
+
+.avatarCell {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 5px;
+  align-items: center;
+  margin: 0;
+}
+
+.dataGrid {
+  border: none;
+}
+
+.dataGrid :global(.MuiDataGrid-columnHeaders) {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #cfcfcf !important;
+  border-bottom: 1px solid #000000;
+}
+
+.dataGrid :global(.MuiDataGrid-columnHeaderRow) {
+  background-color: #cfcfcf !important;
+}
+
+.dataGrid :global(.MuiDataGrid-columnHeader) {
+  padding: 12px 16px;
+  background-color: #cfcfcf !important;
+  color: #000000;
+}
+
+.dataGrid :global(.MuiDataGrid-columnHeaderTitleContainer) {
+  color: #000000;
+}
+
+.dataGrid :global(.MuiDataGrid-columnHeaderTitle) {
+  font-weight: 700;
+  color: #000000;
+  text-align: center;
+  width: 100%;
+}
+
+.dataGrid :global(.MuiDataGrid-scrollbarFiller) {
+  background-color: #cfcfcf !important;
+}
+
+.dataGrid :global(.MuiDataGrid-cell) {
+  padding: 12px 16px;
+}
